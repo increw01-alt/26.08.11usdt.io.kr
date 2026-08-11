@@ -1,0 +1,79 @@
+<section class="hero">
+  <div class="container">
+    <span class="eyebrow">도구</span>
+    <h1>김프 계산기</h1>
+    <p class="sub">국내 가격, 해외 가격, 환율 — 세 값만 넣으면 김치프리미엄이 바로 계산됩니다. 입력값은 브라우저 안에서만 계산되며 어디에도 전송되지 않습니다.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="card calc-card">
+      <form id="kimp-calc" onsubmit="return false;">
+        <div class="calc-field">
+          <label for="calc-krw">국내 가격 (원)</label>
+          <input type="text" id="calc-krw" inputmode="decimal" value="{{CALC_DEFAULT_KRW}}" autocomplete="off">
+          <div class="hint">예: 업비트 USDT 현재가 (기본값: {{UPDATED_KST}} 기준 업비트 USDT)</div>
+        </div>
+        <div class="calc-field">
+          <label for="calc-usd">해외 가격 (달러)</label>
+          <input type="text" id="calc-usd" inputmode="decimal" value="1" autocomplete="off">
+          <div class="hint">USDT는 1, 비트코인이라면 바이낸스 BTC 가격</div>
+        </div>
+        <div class="calc-field">
+          <label for="calc-fx">달러 환율 (원/달러)</label>
+          <input type="text" id="calc-fx" inputmode="decimal" value="{{CALC_DEFAULT_FX}}" autocomplete="off">
+          <div class="hint">기본값: {{FX_DATE}} 기준 {{FX_SOURCE}}</div>
+        </div>
+        <div class="calc-result">
+          <div class="big num" id="calc-out">—</div>
+          <div class="desc num" id="calc-desc"></div>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <h2>김프 계산 공식</h2>
+    <div class="card">
+      <p style="margin-top:0;"><strong>김프(%) = (국내 가격 ÷ (해외 가격 × 환율) − 1) × 100</strong></p>
+      <p>해외 달러 가격에 환율을 곱해 '해외 가격의 원화 환산가'를 만들고, 국내 가격이 그보다 몇 % 비싼지(싼지)를 구하는 방식입니다. 결과가 플러스면 김프(국내가 더 비쌈), 마이너스면 <a href="/guide/reverse-premium/">역프</a>(국내가 더 쌈)입니다.</p>
+      <p style="margin-bottom:0;">예시: 업비트 USDT가 1,410원이고 환율이 1,390원이면 → (1,410 ÷ 1,390 − 1) × 100 ≈ <strong>+1.44%</strong></p>
+    </div>
+    <div class="callout warn" style="margin-top:18px;">
+      <p><strong>주의:</strong> 이 계산기는 시세 차이만 계산합니다. 실제 거래에는 거래 수수료, 출금·전송 수수료, 전송 시간 중 가격 변동, 세금·외국환거래 규제 등 추가 변수가 있습니다. 김프 수치만 보고 재정거래에 나서는 것이 왜 위험한지는 <a href="/guide/kimp-arbitrage-risks/">이 가이드</a>에서 자세히 다룹니다.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section faq" aria-label="자주 묻는 질문">
+  <div class="container">
+    <h2>자주 묻는 질문</h2>
+    <details>
+      <summary>어떤 환율을 넣어야 하나요?</summary>
+      <p>일반적으로 매매기준율(공시 환율)을 사용합니다. 이 페이지의 기본값은 공개 환율 API 기준이며, 은행 송금 환율과는 다를 수 있습니다.</p>
+    </details>
+    <details>
+      <summary>USDT 김프는 어떻게 계산하나요?</summary>
+      <p>해외 가격에 1을 넣으면 됩니다. USDT는 1달러 가치를 목표로 하는 스테이블코인이므로, 국내 USDT 가격 ÷ 환율이 곧 김프입니다.</p>
+    </details>
+    <details>
+      <summary>계산 결과가 사이트 메인의 김프와 조금 다른데요?</summary>
+      <p>메인 화면은 10분 단위 스냅샷 기준이고, 계산기에 직접 넣은 값은 입력 시점 기준이라 차이가 날 수 있습니다.</p>
+    </details>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="cta-box">
+      <div>
+        <div class="t">지금 실제 김프 확인하기</div>
+        <div class="d">업비트·빗썸 USDT 시세와 김프를 10분 단위로 갱신합니다.</div>
+      </div>
+      <a class="btn" href="/">김프 현황판 보기</a>
+    </div>
+  </div>
+</section>

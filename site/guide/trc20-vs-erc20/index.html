@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TRC20 vs ERC20 차이 — USDT 네트워크 선택법 | usdt.io.kr</title>
+<meta name="description" content="같은 USDT라도 TRC20과 ERC20은 수수료·속도·주소 형식이 다릅니다. 차이를 표로 비교하고, 전송 시 네트워크 선택 기준과 실수 방지 체크리스트까지 정리했습니다.">
+<link rel="canonical" href="https://usdt.io.kr/guide/trc20-vs-erc20/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TRC20 vs ERC20 차이 — USDT 네트워크 선택법 | usdt.io.kr">
+<meta property="og:description" content="같은 USDT라도 TRC20과 ERC20은 수수료·속도·주소 형식이 다릅니다. 차이를 표로 비교하고, 전송 시 네트워크 선택 기준과 실수 방지 체크리스트까지 정리했습니다.">
+<meta property="og:url" content="https://usdt.io.kr/guide/trc20-vs-erc20/">
+<meta property="og:site_name" content="usdt.io.kr">
+<meta property="og:locale" content="ko_KR">
+<meta name="twitter:card" content="summary">
+<!-- 서치콘솔/서치어드바이저 인증 메타태그는 아래에 추가 -->
+<!-- <meta name="google-site-verification" content=""> -->
+<!-- <meta name="naver-site-verification" content=""> -->
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+<script>
+(function(){try{var t=localStorage.getItem("theme");if(t)document.documentElement.setAttribute("data-theme",t);}catch(e){}})();
+</script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="/assets/css/tokens.css">
+<link rel="stylesheet" href="/assets/css/site.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "TRC20 vs ERC20 차이 — USDT 네트워크 선택법", "description": "같은 USDT라도 TRC20과 ERC20은 수수료·속도·주소 형식이 다릅니다. 차이를 표로 비교하고, 전송 시 네트워크 선택 기준과 실수 방지 체크리스트까지 정리했습니다.", "datePublished": "2026-08-11", "dateModified": "2026-08-11", "author": {"@type": "Organization", "name": "usdt.io.kr", "url": "https://usdt.io.kr"}, "publisher": {"@type": "Organization", "name": "usdt.io.kr"}, "mainEntityOfPage": "https://usdt.io.kr/guide/trc20-vs-erc20/", "inLanguage": "ko"}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "홈", "item": "https://usdt.io.kr/"}, {"@type": "ListItem", "position": 2, "name": "가이드", "item": "https://usdt.io.kr/guide/"}, {"@type": "ListItem", "position": 3, "name": "TRC20 vs ERC20", "item": "https://usdt.io.kr/guide/trc20-vs-erc20/"}]}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "TRC20과 ERC20 중 어느 쪽 수수료가 더 싼가요?", "acceptedAnswer": {"@type": "Answer", "text": "일반적으로 TRC20 쪽 전송 비용이 낮은 편으로 알려져 있지만, 두 네트워크 모두 혼잡도와 수수료 정책에 따라 비용이 수시로 바뀝니다. 실제 출금 수수료는 이용 중인 거래소 공지에서 확인하는 것이 가장 정확합니다."}}, {"@type": "Question", "name": "주소만 보고 네트워크를 구분할 수 있나요?", "acceptedAnswer": {"@type": "Answer", "text": "TRC20 주소는 대문자 T로 시작하고 ERC20 주소는 0x로 시작합니다. 다만 0x 형식은 이더리움 계열의 다른 네트워크들도 함께 쓰는 형식이므로, 주소 모양만 믿지 말고 입금 화면에 표시된 네트워크 이름을 반드시 확인해야 합니다."}}, {"@type": "Question", "name": "네트워크를 잘못 선택해서 보내면 어떻게 되나요?", "acceptedAnswer": {"@type": "Answer", "text": "받는 쪽이 지원하지 않는 네트워크로 보내면 자산이 도착하지 않고, 복구가 불가능하거나 복구 수수료가 발생할 수 있습니다. 처음 보내는 주소라면 소액으로 먼저 테스트 전송을 해 보는 것이 안전합니다."}}, {"@type": "Question", "name": "TRC20 USDT와 ERC20 USDT는 가치가 다른가요?", "acceptedAnswer": {"@type": "Answer", "text": "가치는 같습니다. 어느 네트워크에 있든 1 USDT는 동일한 1 USDT이며, 네트워크는 전송 경로와 수수료가 다를 뿐입니다."}}]}</script>
+</head>
+<body>
+<header class="site-header">
+  <div class="container">
+    <a class="logo" href="/">
+      <img src="/assets/favicon.svg" alt="" width="26" height="26">
+      usdt.io.kr
+      <span class="tag">디지털 달러의 기준</span>
+    </a>
+    <nav class="site-nav" aria-label="주요 메뉴">
+      <a href="/price/usdt/">시세</a>
+      <a href="/calc/kimp/">김프 계산기</a>
+      <a href="/history/">히스토리</a>
+      <a href="/news/">뉴스</a>
+      <a href="/guide/" aria-current="page">가이드</a>
+      <a href="/insight/">인사이트</a>
+    </nav>
+    <div class="header-spacer"></div>
+    <button class="theme-toggle" id="theme-toggle" aria-label="다크 모드 전환" title="다크 모드 전환">◐</button>
+  </div>
+</header>
+
+<main>
+<nav class="breadcrumb container" aria-label="현재 위치">
+  <a href="/">홈</a><span class="sep">›</span><a href="/guide/">가이드</a><span class="sep">›</span>TRC20 vs ERC20
+</nav>
+
+<article class="article">
+  <div class="container">
+    <header class="article-head">
+      <h1>TRC20 vs ERC20 차이 — USDT 네트워크 선택법</h1>
+      <div class="article-meta">
+        <span>가이드</span>
+        <span>발행 2026-08-11</span>
+        <span>수정 2026-08-11</span>
+      </div>
+    </header>
+
+    <div class="article-layout">
+      <aside class="article-aside">
+        <nav class="toc" aria-label="목차">
+          <h4>목차</h4>
+          <ol>
+            <li><a href="#basics">TRC20·ERC20이란 — 같은 USDT, 다른 길</a></li>
+            <li><a href="#comparison">핵심 차이 한눈에 보기</a></li>
+            <li><a href="#fees">수수료는 왜 다르고, 어떻게 확인하나</a></li>
+            <li><a href="#which-to-choose">상황별 네트워크 선택 기준</a></li>
+            <li><a href="#transfer-flow">실제 전송은 이렇게 진행됩니다</a></li>
+            <li><a href="#wrong-network">네트워크를 잘못 선택하면 생기는 일</a></li>
+            <li><a href="#other-networks">그 밖의 USDT 네트워크</a></li>
+          </ol>
+        </nav>
+      </aside>
+
+      <div class="article-body">
+<p class="lead">TRC20과 ERC20의 차이는 한마디로, 같은 USDT(테더)를 어느 블록체인 네트워크로 주고받느냐의 차이입니다. 이 글에서는 두 네트워크가 무엇이 다른지 표로 비교하고, 상황별 선택 기준과 네트워크를 잘못 골랐을 때 생기는 일, 실수 방지 체크리스트까지 한 번에 정리합니다.</p>
+
+<h2 id="basics">TRC20·ERC20이란 — 같은 USDT, 다른 길</h2>
+<p>USDT는 하나의 블록체인에만 존재하는 코인이 아니라, 여러 블록체인 위에 같은 가치로 발행된 토큰입니다. 그중 이더리움 네트워크에서 발행된 USDT를 ERC20 USDT, 트론 네트워크에서 발행된 USDT를 TRC20 USDT라고 부릅니다.</p>
+<p>ERC20과 TRC20은 각각 이더리움과 트론의 '토큰 표준(규격)' 이름입니다. 비유하자면 같은 돈을 어느 도로로 운송하느냐의 차이입니다. 도착하는 USDT의 가치는 1:1로 같지만, 통행료에 해당하는 수수료와 속도, 그리고 주소 형식이 다릅니다.</p>
+<p>역사를 잠깐 보면, USDT는 2014년 비트코인 블록체인 위의 '옴니 레이어'라는 방식으로 처음 발행됐습니다. 이후 이용량이 늘면서 이더리움(ERC20), 트론(TRC20) 등으로 발행 네트워크를 넓혔고, 지금은 트론과 이더리움 두 네트워크가 USDT 유통의 대부분을 차지하는 것으로 알려져 있습니다.</p>
+<p>USDT 자체가 처음이라면 <a href="/guide/what-is-usdt/">USDT란? 테더 완전 정리</a>를 먼저 읽어 보세요.</p>
+
+<h2 id="comparison">핵심 차이 한눈에 보기</h2>
+<div class="table-wrap">
+  <table>
+    <thead><tr><th>구분</th><th>TRC20 (트론)</th><th>ERC20 (이더리움)</th></tr></thead>
+    <tbody>
+      <tr><td>기반 블록체인</td><td>트론(TRON)</td><td>이더리움(Ethereum)</td></tr>
+      <tr><td>주소 형식</td><td>대문자 T로 시작</td><td>0x로 시작</td></tr>
+      <tr><td>전송 속도</td><td>수 초~수 분 수준</td><td>보통 수 분, 혼잡 시 지연</td></tr>
+      <tr><td>수수료 경향</td><td>낮은 편으로 알려짐</td><td>가스비 변동이 커서 혼잡 시 비쌈</td></tr>
+      <tr><td>주 용도</td><td>거래소 간 이동·송금</td><td>디파이 등 온체인 생태계 활용</td></tr>
+      <tr><td>거래소 지원</td><td>대부분 지원</td><td>대부분 지원</td></tr>
+    </tbody>
+  </table>
+</div>
+<p>정리하면 TRC20은 '비용이 낮고 빠른 송금용', ERC20은 '가장 넓은 생태계에서 통용되는 표준'이라는 성격으로 알려져 있습니다. 다만 아래에서 설명하듯 수수료는 고정된 값이 아니므로, 매번 보내기 직전에 확인하는 것이 원칙입니다.</p>
+
+<h2 id="fees">수수료는 왜 다르고, 어떻게 확인하나</h2>
+<p>블록체인 전송 수수료는 네트워크 혼잡도와 각 체인의 수수료 정책에 따라 수시로 변합니다. 이더리움은 전송할 때마다 '가스(gas)'라는 연산 비용을 내는 구조여서, 이용량이 몰리면 가스비가 급등합니다. 트론은 에너지·대역폭이라는 자원 모델을 쓰는데, 이 역시 정책 개편에 따라 전송 비용이 달라져 온 것으로 알려져 있습니다.</p>
+<p>그래서 "TRC20은 몇 달러, ERC20은 몇 달러"처럼 고정 수치를 외워 두는 방식은 금방 틀린 정보가 됩니다. 수수료는 절대 액수가 아니라 '보내는 시점에 어느 쪽이 더 유리한가'를 그때그때 비교하는 대상이라고 생각하는 편이 정확합니다.</p>
+<p>실제로 이용자가 체감하는 비용은 블록체인 자체 수수료보다 거래소가 정한 출금 수수료인 경우가 많습니다. 출금 수수료는 같은 USDT라도 네트워크별로 다르게 책정되고 수시로 조정되므로, 보내기 전에 반드시 이용 중인 거래소의 수수료 공지를 확인하세요. 거래소별 비교 방법은 <a href="/guide/usdt-withdrawal-fees/">USDT 출금 수수료 비교</a> 글에서 다룹니다.</p>
+
+<h2 id="which-to-choose">상황별 네트워크 선택 기준</h2>
+<p>"무엇이 좋은 네트워크인가"보다 "지금 이 전송에 맞는 네트워크가 무엇인가"를 묻는 것이 정확한 접근입니다. 자주 만나는 상황별로 판단 기준을 정리하면 다음과 같습니다.</p>
+<ul>
+  <li><strong>거래소에서 거래소로 옮길 때:</strong> 양쪽 거래소가 모두 지원하면서 출금 수수료가 낮은 네트워크를 고르는 것이 일반적입니다. 실무에서는 TRC20이 많이 쓰이는 편으로 알려져 있습니다.</li>
+  <li><strong>디파이·개인 지갑에서 활용할 때:</strong> 이더리움 생태계의 서비스를 쓸 계획이라면 ERC20이 필요할 수 있습니다.</li>
+  <li><strong>소액을 보낼 때:</strong> 금액 대비 수수료 비중이 커지므로, 수수료가 낮은 네트워크가 유리합니다.</li>
+  <li><strong>받는 쪽이 네트워크를 지정한 경우:</strong> 선택의 여지가 없습니다. 무조건 받는 쪽이 지원하는 네트워크에 맞춰야 합니다.</li>
+</ul>
+<p>국내 거래소에서 USDT를 사서 옮기는 전체 과정이 궁금하다면 <a href="/guide/how-to-buy-usdt/">USDT 사는법</a>을 참고하세요.</p>
+
+<h2 id="transfer-flow">실제 전송은 이렇게 진행됩니다</h2>
+<p>거래소에서 USDT를 외부로 보낼 때의 흐름을 알아 두면, 각 단계에서 무엇을 확인해야 하는지가 분명해집니다.</p>
+<ol>
+  <li><strong>출금 신청:</strong> 받는 주소를 입력하고 <strong>네트워크(TRC20·ERC20 등)를 선택</strong>합니다. 실수가 가장 많이 일어나는 단계입니다.</li>
+  <li><strong>본인 확인·트래블룰 절차:</strong> 금액에 따라 수취인 정보 확인 등 규정상 절차가 적용될 수 있습니다.</li>
+  <li><strong>블록체인 전파:</strong> 거래소가 출금을 처리하면 해당 네트워크에 거래가 기록되기 시작합니다.</li>
+  <li><strong>컨펌(확인) 대기:</strong> 받는 거래소·지갑은 일정 횟수의 블록 확인을 거친 뒤 입금을 인정합니다. 필요한 컨펌 수는 네트워크와 서비스마다 다릅니다.</li>
+  <li><strong>입금 반영:</strong> 컨펌이 끝나면 잔고에 반영됩니다. 지연될 경우 보낸 거래의 처리 현황을 각 네트워크의 조회 사이트(블록 익스플로러)에서 확인할 수 있습니다.</li>
+</ol>
+
+<h2 id="wrong-network">네트워크를 잘못 선택하면 생기는 일</h2>
+<p>보내는 쪽에서 고른 네트워크와 받는 주소의 네트워크가 다르면, 자산이 도착하지 않거나 접근할 수 없는 상태가 될 수 있습니다. 특히 받는 거래소가 해당 네트워크의 입금을 지원하지 않는 경우가 문제입니다. 예를 들어 받는 쪽이 TRC20 입금 주소를 알려 줬는데 보내는 쪽에서 ERC20 네트워크를 고르면, 그 전송은 받는 쪽 시스템이 인식하지 못하는 곳으로 가게 됩니다.</p>
+<p>거래소에 따라 잘못 들어온 자산의 복구를 지원하기도 하지만, 별도의 복구 수수료를 받거나 기술적으로 복구가 불가능한 경우도 있습니다. 즉 '잘못 보내면 되돌릴 수 있다'는 보장이 없으므로, 보내기 전 확인이 유일하게 확실한 안전장치입니다.</p>
+<p>실수를 막는 체크리스트는 다음과 같습니다.</p>
+<ul>
+  <li>받는 쪽 입금 화면에서 주소와 함께 <strong>네트워크 이름</strong>을 확인한다.</li>
+  <li>주소 첫 글자를 본다 — TRC20은 T, ERC20은 0x로 시작한다. 단, 0x 형식은 다른 이더리움 계열 네트워크도 쓰므로 주소 모양만 믿지 않는다.</li>
+  <li>처음 보내는 주소라면 <strong>소액 테스트 전송</strong> 후 본 전송을 한다.</li>
+  <li>출금 직전, 거래소의 입출금 일시 중단(지갑 점검) 공지가 없는지 확인한다.</li>
+</ul>
+
+<h2 id="other-networks">그 밖의 USDT 네트워크</h2>
+<p>USDT는 트론·이더리움 외에도 솔라나 등 여러 네트워크에서 발행되어 있습니다. 반면 출발점이었던 옴니 레이어를 비롯한 일부 구형 네트워크는 테더가 지원을 축소해 온 것으로 알려져 있습니다. 거래소마다 지원하는 네트워크 목록이 다르므로, 입출금 화면에서 선택 가능한 네트워크를 기준으로 판단하면 됩니다.</p>
+<p>또 하나 알아 둘 개념은, 네트워크가 다른 USDT를 서로 바꾸는 일은 '전송'이 아니라 '교환'에 가깝다는 점입니다. 개인이 직접 체인 간 이동(브리지)을 시도하기보다는, 두 네트워크를 모두 지원하는 거래소에 입금했다가 원하는 네트워크로 출금하는 방식이 일반적으로 단순하고 실수도 적습니다.</p>
+<p>기억할 핵심은 하나입니다. 같은 USDT라도 어느 네트워크에 있느냐에 따라 이동 비용과 경로가 달라질 뿐, 가치는 모두 동일한 1 USDT라는 점입니다.</p>
+
+<div class="callout warn"><p><strong>주의:</strong> 본 글은 정보 제공 목적이며 투자 권유가 아닙니다. 네트워크·수수료 정책은 수시로 바뀌므로 실제 입출금 전에는 이용 중인 거래소의 공지를 기준으로 판단하세요. 잘못된 네트워크 선택으로 인한 손실은 복구가 어려울 수 있습니다.</p></div>
+
+<div class="sources">
+  <h4>출처·참고</h4>
+  <ul>
+    <li>Tether 공식 문서, USDT 지원 네트워크 안내</li>
+    <li>각 거래소 입출금 공지, 네트워크별 출금 수수료 (수시 갱신)</li>
+  </ul>
+</div>
+
+
+        <section class="faq" aria-label="자주 묻는 질문">
+          <h2 id="faq">자주 묻는 질문</h2>
+          <details>
+            <summary>TRC20과 ERC20 중 어느 쪽 수수료가 더 싼가요?</summary>
+            <p>일반적으로 TRC20 쪽 전송 비용이 낮은 편으로 알려져 있지만, 두 네트워크 모두 혼잡도와 수수료 정책에 따라 비용이 수시로 바뀝니다. 실제 출금 수수료는 이용 중인 거래소 공지에서 확인하는 것이 가장 정확합니다.</p>
+          </details>
+          <details>
+            <summary>주소만 보고 네트워크를 구분할 수 있나요?</summary>
+            <p>TRC20 주소는 대문자 T로 시작하고 ERC20 주소는 0x로 시작합니다. 다만 0x 형식은 이더리움 계열의 다른 네트워크들도 함께 쓰는 형식이므로, 주소 모양만 믿지 말고 입금 화면에 표시된 네트워크 이름을 반드시 확인해야 합니다.</p>
+          </details>
+          <details>
+            <summary>네트워크를 잘못 선택해서 보내면 어떻게 되나요?</summary>
+            <p>받는 쪽이 지원하지 않는 네트워크로 보내면 자산이 도착하지 않고, 복구가 불가능하거나 복구 수수료가 발생할 수 있습니다. 처음 보내는 주소라면 소액으로 먼저 테스트 전송을 해 보는 것이 안전합니다.</p>
+          </details>
+          <details>
+            <summary>TRC20 USDT와 ERC20 USDT는 가치가 다른가요?</summary>
+            <p>가치는 같습니다. 어느 네트워크에 있든 1 USDT는 동일한 1 USDT이며, 네트워크는 전송 경로와 수수료가 다를 뿐입니다.</p>
+          </details>
+        </section>
+
+        <div class="cta-box">
+          <div>
+            <div class="t">지금 USDT 김프 확인하기</div>
+            <div class="d">업비트·빗썸 테더 시세와 김프를 10분 단위로 갱신합니다.</div>
+          </div>
+          <a class="btn" href="/">김프 현황판 보기</a>
+        </div>
+
+        <div class="related">
+          <h3>함께 읽으면 좋은 글</h3>
+          <div class="card-grid">
+      <a class="card card-link" href="/guide/usdt-withdrawal-fees/">
+        <div class="card-cat">가이드</div>
+        <h3>USDT 출금 수수료</h3>
+        <p>업비트·빗썸·코인원·코빗의 USDT 출금 수수료를 네트워크별로 비교했습니다. 정확한 수수료 확인 방법과 아끼는 요령, 출금 전 주의점까지 정리했습니다.</p>
+      </a>
+      <a class="card card-link" href="/guide/what-is-usdt/">
+        <div class="card-cat">가이드</div>
+        <h3>USDT란(테더)</h3>
+        <p>USDT(테더)의 뜻과 1달러 유지 원리, 준비금 구조, 역사와 리스크까지 처음 접하는 분 기준으로 정리했습니다. 국내 원화마켓 상장 현황과 김치프리미엄 주의점…</p>
+      </a>
+      <a class="card card-link" href="/guide/how-to-buy-usdt/">
+        <div class="card-cat">가이드</div>
+        <h3>USDT 사는법</h3>
+        <p>USDT(테더) 사는법을 국내 원화마켓 거래소 기준으로 정리했습니다. 준비물과 구매 절차 5단계, 김치프리미엄 확인, 수수료·트래블룰 주의사항까지 담았습니다.</p>
+      </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</article>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-nav">
+      <a href="/price/usdt/">USDT 시세</a>
+      <a href="/calc/kimp/">김프 계산기</a>
+      <a href="/history/">김프 히스토리</a>
+      <a href="/news/">뉴스</a>
+      <a href="/guide/">가이드</a>
+      <a href="/insight/">인사이트</a>
+    </div>
+    <p class="disclaimer">본 사이트는 시세·시장 정보 제공 목적이며 투자 권유가 아닙니다. 가상자산 매매·중개·환전 서비스를 제공하지 않습니다. 표시 시세는 각 거래소 공개 API 기준이며 지연될 수 있습니다. 가상자산 투자는 원금 손실 위험이 있으며, 모든 투자 판단의 책임은 이용자 본인에게 있습니다.</p>
+    <p class="copy">© 2026 usdt.io.kr · 데이터: 업비트·빗썸·바이낸스 공개 API, 환율 공개 API · 갱신 2026-08-11 12:20 KST</p>
+  </div>
+</footer>
+
+<script src="/assets/js/site.js" defer></script>
+
+</body>
+</html>

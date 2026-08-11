@@ -1,0 +1,173 @@
+<section class="hero compact">
+  <div class="container">
+    <span class="eyebrow">테더(USDT) 특화 시세 · 김프 정보</span>
+    <h1>USDT 시세와 김치프리미엄, 한 화면에서 확인합니다</h1>
+    <span class="updated-badge{{STALE_CLASS}}"><span class="dot"></span>10분마다 갱신 · {{UPDATED_KST}} 기준{{STALE_NOTE}}</span>
+  </div>
+</section>
+
+<section class="section" aria-label="김프 대시보드">
+  <div class="container dash">
+    <div class="dash-main">
+
+      <div class="card gauge-card">
+        <div class="gauge-wrap" aria-hidden="true">{{GAUGE_SVG}}</div>
+        <div class="gauge-info">
+          <div class="label">오늘의 김치프리미엄 · 업비트 USDT 기준</div>
+          <div class="value num {{USDT_KIMP_UPBIT_CLASS}}">{{USDT_KIMP_UPBIT}}</div>
+          <div class="desc">{{GAUGE_DESC}}</div>
+        </div>
+      </div>
+
+      <div class="card chart-card">
+        <div class="chart-head"><h3>거래소별 USDT 가격 비교</h3><span class="range">스파크라인: 최근 7일</span></div>
+        <div class="table-wrap" style="border:none;">
+          <table>
+            <thead><tr><th>거래소</th><th class="r">가격(원)</th><th class="r">달러 환산</th><th class="r">등락률</th><th class="r">김프</th><th class="r">7일</th></tr></thead>
+            <tbody>
+              <tr>
+                <td><a href="/price/usdt-upbit/">업비트</a></td>
+                <td class="r num">{{USDT_UPBIT_PRICE}}원</td>
+                <td class="r num">${{USDT_UPBIT_USD}}</td>
+                <td class="r num {{USDT_UPBIT_CHANGE_CLASS}}">{{USDT_UPBIT_CHANGE_TEXT}}</td>
+                <td class="r num {{USDT_KIMP_UPBIT_CLASS}}">{{USDT_KIMP_UPBIT}}</td>
+                <td class="r"><span class="spark" data-chart="series-data" data-spark="usdt_upbit" data-color="s1"></span></td>
+              </tr>
+              <tr>
+                <td><a href="/price/usdt-bithumb/">빗썸</a></td>
+                <td class="r num">{{USDT_BITHUMB_PRICE}}원</td>
+                <td class="r num">${{USDT_BITHUMB_USD}}</td>
+                <td class="r num {{USDT_BITHUMB_CHANGE_CLASS}}">{{USDT_BITHUMB_CHANGE_TEXT}}</td>
+                <td class="r num {{USDT_KIMP_BITHUMB_CLASS}}">{{USDT_KIMP_BITHUMB}}</td>
+                <td class="r"><span class="spark" data-chart="series-data" data-spark="usdt_bithumb" data-color="s1"></span></td>
+              </tr>
+              <tr>
+                <td>달러 환율 <span style="color:var(--ink-3);font-size:12px;">(적정가)</span></td>
+                <td class="r num">{{FX_USDKRW}}원</td>
+                <td class="r num">$1.0000</td>
+                <td class="r num flat">—</td>
+                <td class="r num flat">기준</td>
+                <td class="r"><span class="spark" data-chart="series-data" data-spark="usdkrw" data-color="s2"></span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="section-desc" style="margin:10px 0 0;">{{TODAY_SUMMARY_SENTENCE}}</p>
+      </div>
+
+      <div class="card chart-card">
+        <div class="chart-head"><h3>USDT 김치프리미엄 추이</h3><span class="range">최근 7일 · 10분 단위</span></div>
+        <div class="chart-box" data-chart="series-data" data-series="kimp_usdt" data-labels="USDT 김프" data-colors="s1" data-unit="%" data-days="7" data-baseline="0"></div>
+      </div>
+
+    </div>
+    <div class="dash-side">
+
+      <div class="card">
+        <div class="mini-stat"><span class="k">달러 환율 (USD/KRW)</span></div>
+        <div style="font-size:26px;font-weight:800;letter-spacing:-.01em;" class="num">{{FX_USDKRW}}원</div>
+        <div style="margin:8px 0 2px;"><span class="spark" data-chart="series-data" data-spark="usdkrw" data-color="s2" style="width:100%;height:36px;display:block;"></span></div>
+        <div class="mini-stat"><span class="s">{{FX_SOURCE}} · {{FX_DATE}}</span></div>
+      </div>
+
+      <div class="card">
+        <div class="mini-stat" style="margin-bottom:8px;"><span class="k">USDT 시장 정보</span></div>
+        <div class="mini-stat"><span class="k">52주 최고</span><span class="v num pos">{{USDT_W52_HIGH}}원</span></div>
+        <div class="mini-stat"><span class="k">52주 최저</span><span class="v num neg">{{USDT_W52_LOW}}원</span></div>
+        <div class="mini-stat"><span class="k">시가총액</span><span class="v num">{{USDT_MCAP}}</span></div>
+        <div class="mini-stat"><span class="k">국내 24h 거래대금</span><span class="v num">{{USDT_VOL_TOTAL}}</span></div>
+        <div class="mini-stat"><span class="s">52주 기준: 업비트 · 시총: {{USDT_MCAP_SOURCE}}</span></div>
+      </div>
+
+      <div class="card">
+        <div class="mini-stat" style="margin-bottom:6px;"><span class="k">뉴스 및 주요 소식</span><a href="/news/" style="font-size:12.5px;">더보기 →</a></div>
+        <ul class="news-list">
+{{NEWS_LIST_HOME}}
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="section" aria-label="코인별 김프">
+  <div class="container">
+    <h2>코인별 김치프리미엄</h2>
+    <p class="section-desc">업비트 원화가격과 바이낸스 달러가격(환율 환산)의 차이입니다. 비트코인은 <a href="/price/btc/">전용 페이지</a>에서 차트와 함께 볼 수 있습니다.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>코인</th><th class="r">업비트(원)</th><th class="r">바이낸스($)</th><th class="r">김프</th></tr></thead>
+        <tbody>
+{{COIN_KIMP_ROWS}}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="section" aria-label="장기 차트">
+  <div class="container">
+    <div class="card-grid" style="grid-template-columns:repeat(auto-fit,minmax(320px,1fr));">
+      <div class="card chart-card">
+        <div class="chart-head"><h3>업비트 USDT vs 달러 환율</h3><span class="range">최근 7일 · 10분 단위</span></div>
+        <div class="chart-legend">
+          <span class="key"><span class="swatch" style="background:var(--s1)"></span>업비트 USDT</span>
+          <span class="key"><span class="swatch" style="background:var(--s2)"></span>달러 환율</span>
+        </div>
+        <div class="chart-box" data-chart="series-data" data-series="usdt_upbit,usdkrw" data-labels="업비트 USDT,달러 환율" data-colors="s1,s2" data-unit="₩" data-days="7"></div>
+      </div>
+      <div class="card chart-card">
+        <div class="chart-head"><h3>USDT 김프 장기 추이</h3><span class="range">최근 6개월 · 일봉 종가</span></div>
+        <div class="chart-box" data-chart="daily-data" data-series="kimp_close" data-labels="USDT 김프(종가)" data-colors="s1" data-unit="%" data-days="185" data-baseline="0" data-xdate="1"></div>
+        <p class="section-desc" style="margin:8px 0 0;">일별 상세 기록은 <a href="/history/">히스토리 아카이브</a>에서 확인하세요.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="reverse-premium" aria-label="역프리미엄">
+  <div class="container">
+    <div class="card">
+      <h3>역프리미엄(역프)이란?</h3>
+      <p style="color:var(--ink-2);font-size:14.5px;margin:8px 0 12px;">김프가 마이너스(-)로 내려가 국내 가격이 해외보다 <strong>싸지는 상태</strong>를 역프리미엄, 줄여서 '역프'라고 부릅니다. 위 김프 수치가 음수라면 지금이 역프 구간입니다. 역프는 주로 국내 매도세가 강할 때 나타나며, 시장 심리를 읽는 지표로 활용됩니다.</p>
+      <a href="/guide/reverse-premium/" class="btn ghost">역프 완전 정리 읽기 →</a>
+    </div>
+  </div>
+</section>
+
+<section class="section" aria-label="김프 계산기">
+  <div class="container">
+    <div class="cta-box">
+      <div>
+        <div class="t">내 김프, 직접 계산해보기</div>
+        <div class="d">국내 가격·해외 가격·환율만 넣으면 김프가 바로 계산됩니다.</div>
+      </div>
+      <a class="btn" href="/calc/kimp/">김프 계산기 열기</a>
+    </div>
+  </div>
+</section>
+
+<section class="section" aria-label="가이드">
+  <div class="container">
+    <h2>처음이라면, 여기서부터</h2>
+    <p class="section-desc">김프·테더·스테이블코인을 처음 접하는 분을 위한 핵심 가이드입니다.</p>
+    <div class="card-grid">
+{{HOME_GUIDE_CARDS}}
+    </div>
+    <p style="margin-top:16px;"><a href="/guide/">가이드 전체 보기 →</a></p>
+  </div>
+</section>
+
+<section class="section" aria-label="인사이트">
+  <div class="container">
+    <h2>오늘의 시세 너머, 내일의 달러</h2>
+    <p class="section-desc">컴퓨트달러·AI 에이전트 결제·스테이블코인 지정학 — 디지털 달러의 다음 구조를 다루는 심층 분석입니다.</p>
+    <div class="card-grid">
+{{HOME_INSIGHT_CARDS}}
+    </div>
+    <p style="margin-top:16px;"><a href="/insight/">인사이트 전체 보기 →</a></p>
+  </div>
+</section>
+
+<script type="application/json" id="series-data">{{SERIES_JSON}}</script>
+<script type="application/json" id="daily-data">{{DAILY_JSON}}</script>

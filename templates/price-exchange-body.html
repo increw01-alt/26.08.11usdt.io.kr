@@ -1,0 +1,78 @@
+<section class="hero">
+  <div class="container">
+    <span class="eyebrow">{{EX_NAME}} USDT</span>
+    <h1>{{EX_NAME}} 테더(USDT) 시세</h1>
+    <p class="sub">{{EX_NAME}} 원화마켓의 USDT 가격을 달러 환율과 비교해 김프까지 한 번에 보여드립니다.</p>
+    <span class="updated-badge{{STALE_CLASS}}"><span class="dot"></span>10분마다 갱신 · {{UPDATED_KST}} 기준{{STALE_NOTE}}</span>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="stat-grid">
+      <div class="stat">
+        <div class="label">{{EX_NAME}} USDT 현재가</div>
+        <div class="value num">{{EX_PRICE}}원</div>
+        <div class="delta num {{EX_CHANGE_CLASS}}">{{EX_CHANGE_TEXT}}</div>
+      </div>
+      <div class="stat">
+        <div class="label">환율 대비 김프</div>
+        <div class="value num {{EX_KIMP_CLASS}}">{{EX_KIMP}}</div>
+        <div class="note">달러 환율 {{FX_USDKRW}}원 기준</div>
+      </div>
+      <div class="stat">
+        <div class="label">고가 / 저가</div>
+        <div class="value num" style="font-size:21px;">{{EX_HIGH}}원 / {{EX_LOW}}원</div>
+        <div class="note">24h 거래대금 {{EX_VOL}}</div>
+      </div>
+    </div>
+    <p class="section-desc">{{EX_SUMMARY_SENTENCE}}</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="card chart-card">
+      <div class="chart-head"><h3>{{EX_NAME}} USDT vs 달러 환율</h3><span class="range">최근 7일 · 10분 단위</span></div>
+      <div class="chart-legend">
+        <span class="key"><span class="swatch" style="background:var(--s1)"></span>{{EX_NAME}} USDT</span>
+        <span class="key"><span class="swatch" style="background:var(--s2)"></span>달러 환율</span>
+      </div>
+      <div class="chart-box" data-chart="series-data" data-series="{{EX_SERIES_KEY}},usdkrw" data-labels="{{EX_NAME}} USDT,달러 환율" data-colors="s1,s2" data-unit="₩" data-days="7"></div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <h2>{{EX_NAME}} USDT 마켓 특징</h2>
+    <div class="card">
+{{EX_BLURB}}
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <h2>함께 보면 좋은 페이지</h2>
+    <div class="card-grid">
+      <a class="card card-link" href="{{EX_OTHER_URL}}">
+        <div class="card-cat">시세</div>
+        <h3>{{EX_OTHER_NAME}} USDT 시세</h3>
+        <p>다른 거래소의 테더 가격과 김프를 비교해보세요.</p>
+      </a>
+      <a class="card card-link" href="/price/usdt/">
+        <div class="card-cat">시세</div>
+        <h3>USDT 통합 시세</h3>
+        <p>업비트·빗썸·환율을 한 화면에서 비교합니다.</p>
+      </a>
+      <a class="card card-link" href="/guide/what-is-usdt/">
+        <div class="card-cat">가이드</div>
+        <h3>USDT란? 테더 완전 정리</h3>
+        <p>테더가 뭐길래 국내 거래대금 상위권일까요? 기초부터 정리했습니다.</p>
+      </a>
+    </div>
+  </div>
+</section>
+
+<script type="application/json" id="series-data">{{SERIES_JSON}}</script>

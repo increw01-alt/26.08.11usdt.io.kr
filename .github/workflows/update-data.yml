@@ -1,0 +1,48 @@
+# usdt.io.kr 데이터 파이프라인
+# 10분마다 시세 수집 → 페이지 재빌드 → 커밋 → Cloudflare Pages 자동 배포
+name: update-data
+
+on:
+  schedule:
+    - cron: "*/10 * * * *"   # 10분 주기 (월 ~4,320회, 1회 1분 이내 유지)
+  workflow_dispatch:          # 수동 실행 버튼
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-data
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10       # 좀비 잡 방지 — 무료 티어 소진 차단 (필수)
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      # collect.py / build.py 는 표준 라이브러리만 사용 — pip install 불필요
+      - name: 시세 수집
+        run: python scripts/collect.py
+        env:
+          EXIM_API_KEY: ${{ secrets.EXIM_API_KEY }}   # 선택: 한국수출입은행 환율 API 키 (없으면 무료 대체 소스 사용)
+
+      - name: 페이지 빌드
+        run: python scripts/build.py
+
+      - name: 커밋 & 푸시
+        run: |
+          git config user.name "usdt-io-kr-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "변경 없음 — 커밋 생략"
+          else
+            git commit -m "data: $(TZ=Asia/Seoul date +'%Y-%m-%d %H:%M KST') 갱신"
+            git pull --rebase origin main || true
+            git push
+          fi

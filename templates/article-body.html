@@ -1,0 +1,48 @@
+<nav class="breadcrumb container" aria-label="현재 위치">
+  <a href="/">홈</a><span class="sep">›</span><a href="{{SECTION_URL}}">{{SECTION_NAME}}</a><span class="sep">›</span>{{ARTICLE_TITLE_SHORT}}
+</nav>
+
+<article class="article">
+  <div class="container">
+    <header class="article-head">
+      <h1>{{ARTICLE_H1}}</h1>
+      <div class="article-meta">
+        <span>{{SECTION_NAME}}</span>
+        <span>발행 {{DATE_PUBLISHED}}</span>
+        <span>수정 {{DATE_MODIFIED}}</span>
+      </div>
+    </header>
+
+    <div class="article-layout">
+      <aside class="article-aside">
+        <nav class="toc" aria-label="목차">
+          <h4>목차</h4>
+          <ol>
+{{TOC_ITEMS}}
+          </ol>
+        </nav>
+      </aside>
+
+      <div class="article-body">
+{{ARTICLE_CONTENT}}
+
+{{FAQ_SECTION}}
+
+        <div class="cta-box">
+          <div>
+            <div class="t">{{CTA_TITLE}}</div>
+            <div class="d">{{CTA_DESC}}</div>
+          </div>
+          <a class="btn" href="{{CTA_URL}}">{{CTA_LABEL}}</a>
+        </div>
+
+        <div class="related">
+          <h3>함께 읽으면 좋은 글</h3>
+          <div class="card-grid">
+{{RELATED_CARDS}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</article>

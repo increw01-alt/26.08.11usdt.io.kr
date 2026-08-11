@@ -1,0 +1,35 @@
+<section class="hero">
+  <div class="container">
+    <span class="eyebrow">아카이브</span>
+    <h1>김치프리미엄 히스토리</h1>
+    <p class="sub">매일의 USDT 김프 기록을 날짜별로 쌓아갑니다. 시간이 지날수록 어디에서도 볼 수 없는 데이터가 됩니다.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="card chart-card">
+      <div class="chart-head"><h3>USDT 김프 장기 추이</h3><span class="range">최근 6개월 · 일봉 종가 기준</span></div>
+      <div class="chart-box" data-chart="daily-data" data-series="kimp_close" data-labels="USDT 김프(종가)" data-colors="s1" data-unit="%" data-days="185" data-baseline="0" data-xdate="1"></div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+{{MONTH_GROUPS}}
+    <p class="section-desc" style="margin-top:18px;">아카이브 시작일: {{ARCHIVE_START}} · 매일 자정(KST) 이후 전날 기록이 자동으로 추가됩니다. 과거 구간은 업비트 일봉과 ECB 환율로 소급 산출된 기록이며, 각 페이지에 집계 기준을 표시합니다.</p>
+  </div>
+</section>
+
+<script type="application/json" id="daily-data">{{DAILY_JSON}}</script>
+
+<section class="section">
+  <div class="container">
+    <h2>과거의 김프가 말해주는 것</h2>
+    <div class="card">
+      <p style="margin-top:0;">김프는 국내 가상자산 시장의 과열과 냉각을 보여주는 지표입니다. 2017년 광풍기에는 김프가 50%를 넘기도 했고, 하락장에서는 마이너스(역프)로 내려가기도 했습니다. 일별 기록이 쌓이면 "그때 김프가 몇이었지?"라는 질문에 정확히 답할 수 있게 됩니다.</p>
+      <p style="margin-bottom:0;"><a href="/guide/kimp-all-time-records/">역대 김프 기록 TOP 정리 →</a></p>
+    </div>
+  </div>
+</section>

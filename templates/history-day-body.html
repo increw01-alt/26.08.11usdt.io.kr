@@ -1,0 +1,56 @@
+<nav class="breadcrumb container" aria-label="현재 위치">
+  <a href="/">홈</a><span class="sep">›</span><a href="/history/">히스토리</a><span class="sep">›</span>{{DAY_DATE_KO}}
+</nav>
+
+<section class="hero" style="padding-top:14px;">
+  <div class="container">
+    <h1>{{DAY_DATE_KO}} 김치프리미엄 기록</h1>
+    <p class="sub">{{DAY_SUMMARY_SENTENCE}}</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="stat-grid">
+      <div class="stat">
+        <div class="label">USDT 김프 {{DAY_KIMP_LABEL}}</div>
+        <div class="value num {{DAY_KIMP_AVG_CLASS}}">{{DAY_KIMP_AVG}}</div>
+      </div>
+      <div class="stat">
+        <div class="label">최고 / 최저</div>
+        <div class="value num" style="font-size:21px;">{{DAY_KIMP_MAX}} / {{DAY_KIMP_MIN}}</div>
+      </div>
+      <div class="stat">
+        <div class="label">업비트 USDT 종가</div>
+        <div class="value num">{{DAY_USDT_CLOSE}}원</div>
+        <div class="note">고가 {{DAY_USDT_HIGH}}원 · 저가 {{DAY_USDT_LOW}}원</div>
+      </div>
+      <div class="stat">
+        <div class="label">달러 환율</div>
+        <div class="value num">{{DAY_FX}}원</div>
+      </div>
+    </div>
+    <p class="section-desc">{{DAY_BASIS_NOTE}}</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;">
+      {{PREV_LINK}}
+      {{NEXT_LINK}}
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="cta-box">
+      <div>
+        <div class="t">오늘의 김프는?</div>
+        <div class="d">지금 이 순간의 USDT 김프를 확인하세요.</div>
+      </div>
+      <a class="btn" href="/">김프 현황판 보기</a>
+    </div>
+  </div>
+</section>
