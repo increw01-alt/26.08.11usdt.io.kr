@@ -31,6 +31,9 @@ jobs:
         env:
           EXIM_API_KEY: ${{ secrets.EXIM_API_KEY }}   # 선택: 한국수출입은행 환율 API 키 (없으면 무료 대체 소스 사용)
 
+      - name: 신규 코인 로고 수집 (없는 것만)
+        run: python scripts/fetch_logos.py
+
       - name: 페이지 빌드
         run: python scripts/build.py
 

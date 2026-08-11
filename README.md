@@ -59,6 +59,12 @@ python -m http.server 8000 --directory site   # 로컬 프리뷰
 - [ ] 9월 정기국회 입법 진행 시 krw-stablecoin·digital-asset-basic-act 글 갱신 (date_modified 갱신)
 - [ ] 월 1회 서치콘솔 쿼리 리뷰 → 콘텐츠 보강
 
+## 로컬 작업 시 주의 (충돌 방지)
+
+크론 봇이 10분마다 site/·data/ 를 커밋하므로, 로컬에서 빌드·커밋하기 **전에** 반드시
+`git pull --rebase` 를 먼저 실행할 것. 만약 site/ 생성 파일에서 충돌이 나면
+로컬 빌드 결과(`--theirs`)로 해소하면 된다 — 어차피 다음 크론에서 재생성된다.
+
 ## 새 글 추가 방법
 
 1. `docs/article-spec.md` 계약대로 `content/<section>/<slug>.json` + `.html` 작성

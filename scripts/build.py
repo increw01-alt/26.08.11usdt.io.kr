@@ -267,8 +267,10 @@ def build_data_tokens():
         t[sym + "_BINANCE_USD"] = fmt_usd(g(latest, "binance", sym))
         t[sym + "_KIMP"] = fmt_pct(k)
         t[sym + "_KIMP_CLASS"] = cls_of(k)
-        label = (f'<a href="/price/btc/">{name} ({sym})</a>' if sym == "BTC"
-                 else f"{name} ({sym})")
+        logo = (f'<img class="coin-logo" src="/assets/coins/{sym}.png" alt="" '
+                'width="20" height="20" loading="lazy" onerror="this.style.display=\'none\'">')
+        label = (f'{logo}<a href="/price/btc/">{name} ({sym})</a>' if sym == "BTC"
+                 else f"{logo}{name} ({sym})")
         coin_rows.append(
             f"          <tr><td>{label}</td>"
             f'<td class="r num">{t[sym + "_UPBIT_PRICE"]}원</td>'
@@ -845,7 +847,9 @@ def main():
             f'          <tr data-name="{esc(c["name"])} {c["sym"]}" data-krw="{c["krw"]}" '
             f'data-usd="{c["usd"]}" data-kimp="{c["kimp"] if c["kimp"] is not None else ""}" '
             f'data-change="{c["change"]}" data-vol="{c["vol"]:.0f}">'
-            f'<td>{esc(c["name"])} <span style="color:var(--ink-3);font-size:12px;">{c["sym"]}</span></td>'
+            f'<td><img class="coin-logo" src="/assets/coins/{c["sym"]}.png" alt="" '
+            f'width="20" height="20" loading="lazy" onerror="this.style.display=\'none\'">'
+            f'{esc(c["name"])} <span style="color:var(--ink-3);font-size:12px;">{c["sym"]}</span></td>'
             f'<td class="r num">{fmt_price_any(c["krw"])}원</td>'
             f'<td class="r num">${fmt_usd(c["usd"])}</td>'
             f'<td class="r num {cls_of(c["kimp"])}">{fmt_pct(c["kimp"])}</td>'
