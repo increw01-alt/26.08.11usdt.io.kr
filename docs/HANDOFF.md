@@ -62,7 +62,7 @@ python -m http.server 8788 --directory site   # 로컬 프리뷰
 2. **네이버 소유확인 클릭** → 요청>사이트맵 제출: `https://usdt.io.kr/sitemap.xml` → 웹마스터도구>수집 요청(홈)
 3. **구글 서치콘솔 등록** — 도메인 속성 권장: Cloudflare DNS에 TXT 레코드(이름 @) 추가 방식. URL 접두어 방식이면 메타태그를 `templates/shell.html`의 구글 주석 자리에 넣고 빌드·푸시
 4. 서치콘솔 sitemap 제출 + 주요 페이지 색인 요청
-5. GA4 + Microsoft Clarity 설치 (`templates/shell.html`에 스니펫 → 빌드·푸시)
+5. ~~GA4 설치~~ (완료 — G-1TH4CMK8VW, shell.html에 적용) · Microsoft Clarity는 미설치 (선택)
 6. 애드센스 신청 (콘텐츠 22편으로 요건 충족)
 7. 2026년 9월 정기국회 — 디지털자산기본법·원화 스테이블코인 입법 진행 시
    `content/guide/krw-stablecoin`·`digital-asset-basic-act` 갱신(date_modified) + 속보 글
