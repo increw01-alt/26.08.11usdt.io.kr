@@ -533,8 +533,8 @@ def build_article(a, guide_map, insight_map):
         "description": a["description"],
         "datePublished": a["date_published"],
         "dateModified": a.get("date_modified", a["date_published"]),
-        "author": {"@type": "Organization", "name": "usdt.io.kr", "url": BASE_URL},
-        "publisher": {"@type": "Organization", "name": "usdt.io.kr"},
+        "author": {"@type": "Organization", "name": "테더뷰", "url": BASE_URL},
+        "publisher": {"@type": "Organization", "name": "테더뷰"},
         "mainEntityOfPage": BASE_URL + a["url"],
         "inLanguage": "ko",
     }, {
@@ -551,7 +551,7 @@ def build_article(a, guide_map, insight_map):
 
     render_page(
         os.path.join(a["section"], a["slug"], "index.html"),
-        a["url"], a["title"] + " | usdt.io.kr", a["description"], body,
+        a["url"], a["title"] + " | 테더뷰", a["description"], body,
         og_type="article", jsonld_html="".join(jsonld(x) for x in lds),
         nav=a["section"].upper(),
     )
@@ -584,19 +584,21 @@ def main():
                  "업비트·빗썸 테더 시세와 김치프리미엄·역프를 10분 단위로 확인하세요.")
     ld_home = jsonld({
         "@context": "https://schema.org", "@type": "WebSite",
-        "name": "usdt.io.kr", "url": BASE_URL,
+        "name": "테더뷰",
+        "alternateName": ["usdt.io.kr", "TetherView", "테더뷰 — 디지털 달러의 기준"],
+        "url": BASE_URL,
         "description": "테더(USDT) 특화 시세·김치프리미엄 정보 사이트",
         "inLanguage": "ko",
     })
     render_page("index.html", "/",
-                "USDT 시세 · 테더 김치프리미엄 확인 — 10분마다 갱신 | usdt.io.kr",
+                "USDT 시세 · 테더 김치프리미엄 확인 — 10분마다 갱신 | 테더뷰",
                 home_desc, render(TPL["home-body"], dt),
                 jsonld_html=ld_home, nav=None, extra_scripts=CHART_JS)
     add_map("/")
 
     # /price/usdt/
     render_page("price/usdt/index.html", "/price/usdt/",
-                "USDT 시세 — 테더 원화 가격·김프 통합 비교 | usdt.io.kr",
+                "USDT 시세 — 테더 원화 가격·김프 통합 비교 | 테더뷰",
                 f"테더(USDT) 원화 시세 통합 비교. 업비트 {dt['USDT_UPBIT_PRICE']}원 · 빗썸 "
                 f"{dt['USDT_BITHUMB_PRICE']}원 · 달러 환율 {dt['FX_USDKRW']}원. 김프까지 한 화면에서.",
                 render(TPL["price-usdt-body"], dt),
@@ -647,7 +649,7 @@ def main():
                 else "데이터 파이프라인 가동 후 시세 요약이 표시됩니다."),
         })
         render_page(f"price/usdt-{ex_key}/index.html", f"/price/usdt-{ex_key}/",
-                    f"{ex_name} 테더(USDT) 시세 · 김프 | usdt.io.kr",
+                    f"{ex_name} 테더(USDT) 시세 · 김프 | 테더뷰",
                     f"{ex_name} 원화마켓 테더(USDT) 현재가 {ex_tokens['EX_PRICE']}원, "
                     f"달러 환율 대비 김프 {ex_tokens['EX_KIMP']}. 10분마다 갱신됩니다.",
                     render(TPL["price-exchange-body"], ex_tokens),
@@ -656,7 +658,7 @@ def main():
 
     # /price/btc/
     render_page("price/btc/index.html", "/price/btc/",
-                "비트코인 김치프리미엄 — 업비트 vs 바이낸스 | usdt.io.kr",
+                "비트코인 김치프리미엄 — 업비트 vs 바이낸스 | 테더뷰",
                 f"비트코인 김프 {dt['BTC_KIMP']}. 업비트 원화가격과 바이낸스 달러가격(환율 환산)의 "
                 "차이를 10분 단위로 추적합니다. USDT 김프와의 비교까지.",
                 render(TPL["price-btc-body"], dt),
@@ -673,7 +675,7 @@ def main():
              "acceptedAnswer": {"@type": "Answer", "text": "해외 가격에 1을 넣으면 됩니다. 국내 USDT 가격을 환율로 나눈 값이 곧 김프입니다."}},
         ]})
     render_page("calc/kimp/index.html", "/calc/kimp/",
-                "김프 계산기 — 김치프리미엄 바로 계산 | usdt.io.kr",
+                "김프 계산기 — 김치프리미엄 바로 계산 | 테더뷰",
                 "국내 가격·해외 가격·환율만 넣으면 김치프리미엄이 바로 계산됩니다. "
                 "USDT·비트코인 김프 계산 공식과 주의점까지 정리했습니다.",
                 render(TPL["calc-kimp-body"], dt),
@@ -682,35 +684,35 @@ def main():
 
     # 계산기 허브 + 추가 계산기 4종
     calc_pages = [
-        ("calc-hub-body", "/calc/", "코인 계산기 모음 — 김프·평단가·수익률·변환·복리 | usdt.io.kr",
+        ("calc-hub-body", "/calc/", "코인 계산기 모음 — 김프·평단가·수익률·변환·복리 | 테더뷰",
          "김프 계산기부터 평단가·물타기, 수수료 포함 수익률, 원화·달러·USDT 변환, 복리 계산기까지 "
          "설치 없이 무료로 쓰는 코인 계산기 모음입니다.", None,
          [("어느 계산기를 써야 하나요?",
            "국내외 가격 차이는 김프 계산기, 단위 변환은 변환기, 추가 매수 검토는 평단가 계산기, 실제 손익은 수익률 계산기를 사용하세요."),
           ("입력한 값이 저장되거나 전송되나요?",
            "아니요. 모든 계산은 브라우저 안에서만 실행되며 서버로 아무것도 전송하지 않습니다.")]),
-        ("calc-convert-body", "/calc/convert/", "원화 달러 USDT 변환 계산기 — 환율·테더 시세 자동 반영 | usdt.io.kr",
+        ("calc-convert-body", "/calc/convert/", "원화 달러 USDT 변환 계산기 — 환율·테더 시세 자동 반영 | 테더뷰",
          "원화↔달러↔테더(USDT)를 한 번에 변환합니다. 공개 환율과 업비트 USDT 시세가 자동 반영되어 "
          "김프 차이까지 그대로 보입니다.", CALC_TOOLS_JS,
          [("환전 수수료도 반영되나요?",
            "아니요. 기준 시세만 적용합니다. 실제 환전은 우대율 스프레드, 거래소 매매는 거래 수수료가 추가됩니다."),
           ("USDT 시세는 어느 거래소 기준인가요?",
            "업비트 KRW-USDT 체결가 기준이며 10분마다 갱신됩니다. 직접 수정해 다른 가격으로 계산할 수도 있습니다.")]),
-        ("calc-average-body", "/calc/average/", "평단가 계산기 (물타기 계산기) — 추가매수 후 평단 바로 계산 | usdt.io.kr",
+        ("calc-average-body", "/calc/average/", "평단가 계산기 (물타기 계산기) — 추가매수 후 평단 바로 계산 | 테더뷰",
          "보유 수량·평단가에 추가 매수를 더하면 새 평단가와 총 투자금이 바로 계산됩니다. "
          "물타기 공식과 주의점까지 정리했습니다.", CALC_TOOLS_JS,
          [("수량 대신 금액으로 계산할 수 있나요?",
            "추가 매수 수량 칸에 매수 금액을 매수 가격으로 나눈 값을 넣으면 됩니다."),
           ("수수료는 반영되나요?",
            "평단가 계산기는 가격만 계산합니다. 수수료 포함 손익은 수익률 계산기를 사용하세요.")]),
-        ("calc-profit-body", "/calc/profit/", "코인 수익률 계산기 — 수수료 포함 손익·본전가 계산 | usdt.io.kr",
+        ("calc-profit-body", "/calc/profit/", "코인 수익률 계산기 — 수수료 포함 손익·본전가 계산 | 테더뷰",
          "매수가·매도가·수량에 거래 수수료까지 반영해 실제 손익과 수익률, 본전가를 계산합니다.",
          CALC_TOOLS_JS,
          [("아직 안 팔았는데 평가손익을 보려면요?",
            "매도가 칸에 현재가를 넣으면 지금 매도 기준의 평가손익이 계산됩니다."),
           ("세금도 계산해주나요?",
            "가상자산 과세는 시행 시기와 세부 기준이 확정 단계가 아니라 반영하지 않았습니다.")]),
-        ("calc-compound-body", "/calc/compound/", "복리 계산기 — 회차별 복리 수익 시뮬레이션 | usdt.io.kr",
+        ("calc-compound-body", "/calc/compound/", "복리 계산기 — 회차별 복리 수익 시뮬레이션 | 테더뷰",
          "원금·회당 수익률·반복 횟수로 복리 결과를 계산합니다. 추가 납입과 마이너스 수익률 "
          "시나리오도 지원합니다.", CALC_TOOLS_JS,
          [("'회'는 일·월·년 중 뭔가요?",
@@ -771,7 +773,7 @@ def main():
             "DAY_SUMMARY_SENTENCE": sentence,
         })
         render_page(f"history/{ds}/index.html", f"/history/{ds}/",
-                    f"{date_ko(ds)} 김치프리미엄 기록 | usdt.io.kr",
+                    f"{date_ko(ds)} 김치프리미엄 기록 | 테더뷰",
                     day_tokens["DAY_SUMMARY_SENTENCE"],
                     render(TPL["history-day-body"], day_tokens),
                     og_type="article", nav="HISTORY")
@@ -805,10 +807,10 @@ def main():
         "name": "USDT 김치프리미엄 일별 기록",
         "description": "업비트 KRW-USDT와 달러 환율 기반 김치프리미엄 일별 요약(평균·최고·최저) 아카이브",
         "url": BASE_URL + "/history/", "inLanguage": "ko",
-        "creator": {"@type": "Organization", "name": "usdt.io.kr"},
+        "creator": {"@type": "Organization", "name": "테더뷰"},
     })
     render_page("history/index.html", "/history/",
-                "김치프리미엄 히스토리 — 일별 김프 기록 아카이브 | usdt.io.kr",
+                "김치프리미엄 히스토리 — 일별 김프 기록 아카이브 | 테더뷰",
                 "매일의 USDT 김치프리미엄 기록을 날짜별로 축적합니다. 평균·최고·최저 김프를 "
                 "날짜별 페이지로 확인하세요.",
                 render(TPL["history-index-body"], hist_tokens),
@@ -830,7 +832,7 @@ def main():
                            or '          <li><div class="meta">뉴스 수집 준비 중입니다. 파이프라인 가동 후 시간당 갱신됩니다.</div></li>'),
     })
     render_page("news/index.html", "/news/",
-                "테더·스테이블코인·김프 뉴스 헤드라인 | usdt.io.kr",
+                "테더·스테이블코인·김프 뉴스 헤드라인 | 테더뷰",
                 "테더(USDT)·스테이블코인 규제·김치프리미엄 관련 최신 뉴스 헤드라인을 자동 수집해 "
                 "시간당 갱신합니다. 원문은 각 언론사 링크로 연결됩니다.",
                 render(TPL["news-body"], news_tokens), nav="NEWS")
@@ -844,11 +846,11 @@ def main():
     for section, items, eyebrow, title, page_title, desc in (
             ("guide", guides, "가이드",
              "김프·테더·스테이블코인 가이드",
-             "가이드 — 김프·테더·스테이블코인 완전 정리 | usdt.io.kr",
+             "가이드 — 김프·테더·스테이블코인 완전 정리 | 테더뷰",
              "김치프리미엄이 뭔지, 테더는 어떻게 사는지, 스테이블코인 규제는 어디로 가는지 — 처음부터 차근차근 정리했습니다."),
             ("insight", insights, "인사이트",
              "디지털 달러 인사이트",
-             "인사이트 — 컴퓨트달러와 디지털 달러의 미래 | usdt.io.kr",
+             "인사이트 — 컴퓨트달러와 디지털 달러의 미래 | 테더뷰",
              "컴퓨트달러, AI 에이전트 결제, 스테이블코인과 미국 국채 — 오늘의 시세 너머에서 벌어지는 달러 패권의 재편을 다룹니다.")):
         cards = "\n".join(
             card_html(a["url"], eyebrow, a["title_short"], a["description"]) for a in items) \
@@ -863,7 +865,7 @@ def main():
 
     # 404
     render_page("404.html", "/404.html",
-                "페이지를 찾을 수 없습니다 | usdt.io.kr",
+                "페이지를 찾을 수 없습니다 | 테더뷰",
                 "요청하신 페이지를 찾을 수 없습니다.",
                 render(TPL["404-body"], dt))
 
