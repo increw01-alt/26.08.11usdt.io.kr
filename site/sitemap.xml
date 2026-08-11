@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://usdt.io.kr/</loc><lastmod>2026-08-11</lastmod></url>
+  <url><loc>https://usdt.io.kr/calc/</loc><lastmod>2026-08-11</lastmod></url>
+  <url><loc>https://usdt.io.kr/calc/average/</loc><lastmod>2026-08-11</lastmod></url>
+  <url><loc>https://usdt.io.kr/calc/compound/</loc><lastmod>2026-08-11</lastmod></url>
+  <url><loc>https://usdt.io.kr/calc/convert/</loc><lastmod>2026-08-11</lastmod></url>
   <url><loc>https://usdt.io.kr/calc/kimp/</loc><lastmod>2026-08-11</lastmod></url>
+  <url><loc>https://usdt.io.kr/calc/profit/</loc><lastmod>2026-08-11</lastmod></url>
   <url><loc>https://usdt.io.kr/guide/</loc><lastmod>2026-08-11</lastmod></url>
   <url><loc>https://usdt.io.kr/guide/crypto-tax-2027/</loc><lastmod>2026-08-11</lastmod></url>
   <url><loc>https://usdt.io.kr/guide/digital-asset-basic-act/</loc><lastmod>2026-08-11</lastmod></url>

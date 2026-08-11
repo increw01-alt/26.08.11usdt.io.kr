@@ -1,0 +1,76 @@
+<nav class="breadcrumb container" aria-label="현재 위치">
+  <a href="/">홈</a><span class="sep">›</span><a href="/calc/">계산기</a><span class="sep">›</span>평단가
+</nav>
+
+<section class="hero" style="padding-top:14px;">
+  <div class="container">
+    <h1>평단가 · 물타기 계산기</h1>
+    <p class="sub">지금 보유 중인 수량·평단에 추가 매수를 더하면 새 평단가가 얼마가 되는지 바로 계산합니다.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="card calc-card">
+      <form id="avg-form" onsubmit="return false;">
+        <div class="calc-field" style="display:flex;gap:12px;">
+          <div style="flex:1;">
+            <label for="avg-q1">보유 수량</label>
+            <input type="text" id="avg-q1" inputmode="decimal" placeholder="예: 0.5" autocomplete="off">
+          </div>
+          <div style="flex:1;">
+            <label for="avg-p1">현재 평단가 (원)</label>
+            <input type="text" id="avg-p1" inputmode="decimal" placeholder="예: 95000000" autocomplete="off">
+          </div>
+        </div>
+        <div class="calc-field" style="display:flex;gap:12px;">
+          <div style="flex:1;">
+            <label for="avg-q2">추가 매수 수량</label>
+            <input type="text" id="avg-q2" inputmode="decimal" placeholder="예: 0.5" autocomplete="off">
+          </div>
+          <div style="flex:1;">
+            <label for="avg-p2">추가 매수 가격 (원)</label>
+            <input type="text" id="avg-p2" inputmode="decimal" placeholder="예: 88000000" autocomplete="off">
+          </div>
+        </div>
+        <div class="calc-result">
+          <div class="big num" id="avg-out">—</div>
+          <div class="desc num" id="avg-desc"></div>
+        </div>
+      </form>
+    </div>
+    <div class="callout warn" style="margin-top:18px;">
+      <p><strong>주의:</strong> 물타기(추가 매수)는 평단을 낮추지만 투입 금액과 손실 위험도 함께 커집니다. 이 계산기는 산술 결과만 보여줄 뿐, 추가 매수를 권하는 것이 아닙니다.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <h2>평단가 계산 공식</h2>
+    <div class="card">
+      <p style="margin-top:0;"><strong>새 평단가 = (기존 수량 × 기존 평단 + 추가 수량 × 추가 가격) ÷ 총 수량</strong></p>
+      <p style="margin-bottom:0;">예: 0.5개를 9,500만 원 평단으로 보유 중일 때 8,800만 원에 0.5개를 추가 매수하면 → (0.5×9,500만 + 0.5×8,800만) ÷ 1 = <strong>9,150만 원</strong>이 새 평단이 됩니다.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section faq" aria-label="자주 묻는 질문">
+  <div class="container">
+    <h2>자주 묻는 질문</h2>
+    <details>
+      <summary>수량 대신 금액으로 계산할 수 있나요?</summary>
+      <p>추가 매수 수량 칸에 "매수 금액 ÷ 매수 가격"을 넣으면 됩니다. 예: 100만 원어치를 1,400원에 산다면 수량은 714.28개입니다.</p>
+    </details>
+    <details>
+      <summary>여러 번 나눠 산 경우는요?</summary>
+      <p>먼저 두 번을 계산해 나온 새 평단과 총 수량을 '보유' 칸에 넣고, 다음 매수를 '추가' 칸에 넣는 식으로 반복하면 됩니다.</p>
+    </details>
+    <details>
+      <summary>수수료는 반영되나요?</summary>
+      <p>아니요. 거래 수수료까지 반영한 실질 손익은 수익률 계산기를 사용하세요.</p>
+    </details>
+  </div>
+</section>
+
+{{CALC_NAV}}

@@ -1,0 +1,75 @@
+<nav class="breadcrumb container" aria-label="현재 위치">
+  <a href="/">홈</a><span class="sep">›</span><a href="/calc/">계산기</a><span class="sep">›</span>복리
+</nav>
+
+<section class="hero" style="padding-top:14px;">
+  <div class="container">
+    <h1>복리 계산기</h1>
+    <p class="sub">원금에 회당 수익률이 반복 적용되면 결과가 어떻게 되는지 시뮬레이션합니다. 회차마다 추가 납입하는 경우도 지원합니다.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="card calc-card">
+      <form id="cp-form" onsubmit="return false;">
+        <div class="calc-field">
+          <label for="cp-principal">원금 (원)</label>
+          <input type="text" id="cp-principal" inputmode="decimal" placeholder="예: 1000000" autocomplete="off">
+        </div>
+        <div class="calc-field" style="display:flex;gap:12px;">
+          <div style="flex:1;">
+            <label for="cp-rate">회당 수익률 (%)</label>
+            <input type="text" id="cp-rate" inputmode="decimal" placeholder="예: 1 또는 -0.5" autocomplete="off">
+          </div>
+          <div style="flex:1;">
+            <label for="cp-periods">반복 횟수 (회)</label>
+            <input type="text" id="cp-periods" inputmode="decimal" placeholder="예: 12" autocomplete="off">
+          </div>
+        </div>
+        <div class="calc-field">
+          <label for="cp-add">회당 추가 납입 (원, 선택)</label>
+          <input type="text" id="cp-add" inputmode="decimal" value="0" autocomplete="off">
+        </div>
+        <div class="calc-result">
+          <div class="big num" id="cp-out">—</div>
+          <div class="desc num" id="cp-desc"></div>
+        </div>
+      </form>
+    </div>
+    <div class="callout warn" style="margin-top:18px;">
+      <p><strong>주의:</strong> 이 계산기는 "매회 같은 수익률"이라는 가정의 산술 결과일 뿐입니다. 실제 투자 수익률은 일정하지 않으며 손실 회차가 섞이면 결과가 크게 달라집니다. 수익 보장 시뮬레이션이 아닙니다.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <h2>복리가 작동하는 방식</h2>
+    <div class="card">
+      <p style="margin-top:0;"><strong>최종 금액 = 원금 × (1 + 회당 수익률)<sup>횟수</sup></strong> — 수익이 원금에 합쳐져 다음 회차의 기준이 되는 구조입니다.</p>
+      <p>예: 100만 원에 월 1%씩 12개월이면 100만 × 1.01¹² ≈ <strong>112.7만 원</strong>. 단리(12만 원)보다 커지는 차이가 복리 효과입니다. 반대로 회당 -1%면 12회 뒤 약 88.6만 원으로, 손실도 같은 방식으로 누적됩니다.</p>
+      <p style="margin-bottom:0;">마이너스 수익률도 입력할 수 있으니 하락 시나리오도 함께 계산해보세요.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section faq" aria-label="자주 묻는 질문">
+  <div class="container">
+    <h2>자주 묻는 질문</h2>
+    <details>
+      <summary>'회'는 일·월·년 중 뭔가요?</summary>
+      <p>단위는 자유입니다. 회당 수익률과 횟수의 단위만 맞추면 됩니다. 월 1%로 1년이면 12회, 연 5%로 10년이면 10회입니다.</p>
+    </details>
+    <details>
+      <summary>추가 납입은 언제 반영되나요?</summary>
+      <p>각 회차가 시작될 때 납입하고 그 회차의 수익률을 함께 적용받는 방식(기시 납입)으로 계산합니다.</p>
+    </details>
+    <details>
+      <summary>스테이킹·예치 수익도 계산할 수 있나요?</summary>
+      <p>회당 지급률을 알면 같은 방식으로 계산할 수 있습니다. 다만 실제 상품은 지급률 변동·해지 조건 등이 있으니 산술 참고용으로만 쓰세요.</p>
+    </details>
+  </div>
+</section>
+
+{{CALC_NAV}}

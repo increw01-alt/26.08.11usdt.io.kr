@@ -167,7 +167,8 @@ insight/krw-stablecoin-future: ["/guide/krw-stablecoin/", "/insight/compute-doll
 
 ## 6. 내부 링크 승인 URL (이 목록 밖 내부 링크 금지)
 
-도구·시세: `/` `/price/usdt/` `/price/usdt-upbit/` `/price/usdt-bithumb/` `/price/btc/` `/calc/kimp/` `/history/`
+도구·시세: `/` `/price/usdt/` `/price/usdt-upbit/` `/price/usdt-bithumb/` `/price/btc/` `/history/` `/news/`
+계산기: `/calc/` `/calc/kimp/` `/calc/convert/` `/calc/average/` `/calc/profit/` `/calc/compound/`
 색인: `/guide/` `/insight/`
 가이드: `/guide/<위 배정표의 slug>/` 15개
 인사이트: `/insight/<위 배정표의 slug>/` 7개

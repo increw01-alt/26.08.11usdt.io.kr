@@ -308,6 +308,19 @@ def build_data_tokens():
                            or '          <li><div class="meta">뉴스 수집 준비 중입니다.</div></li>')
     t["DAILY_JSON"] = daily_json
 
+    # 계산기 미니 내비 (모든 계산기 페이지 하단 공용)
+    calc_links = [("/calc/kimp/", "김프"), ("/calc/convert/", "변환"),
+                  ("/calc/average/", "평단가"), ("/calc/profit/", "수익률"),
+                  ("/calc/compound/", "복리")]
+    t["CALC_NAV"] = (
+        '<section class="section" aria-label="다른 계산기">\n'
+        '  <div class="container">\n'
+        '    <h2 class="section-title">다른 계산기</h2>\n'
+        '    <div class="footer-nav" style="margin-top:12px;">\n'
+        + "\n".join(f'      <a class="btn ghost" href="{u}">{n} 계산기</a>' for u, n in calc_links)
+        + '\n      <a class="btn ghost" href="/calc/">전체 보기</a>\n'
+        '    </div>\n  </div>\n</section>')
+
     # 요약 문장 (크롤러 노출용 텍스트)
     if fx and kimp_up is not None:
         state = "프리미엄(김프)" if kimp_up > 0.05 else ("역프리미엄(역프)" if kimp_up < -0.05 else "해외가와 거의 일치")
@@ -364,6 +377,15 @@ def render_page(out_rel, canonical_path, title, description, body,
 
 CHART_JS = '<script src="/assets/js/chart-mini.js" defer></script>'
 CALC_JS = '<script src="/assets/js/calc.js" defer></script>'
+CALC_TOOLS_JS = '<script src="/assets/js/calc-tools.js" defer></script>'
+
+
+def faq_ld(pairs):
+    return jsonld({
+        "@context": "https://schema.org", "@type": "FAQPage",
+        "mainEntity": [{"@type": "Question", "name": q,
+                        "acceptedAnswer": {"@type": "Answer", "text": a}}
+                       for q, a in pairs]})
 
 SITEMAP = []  # (canonical_path, lastmod)
 
@@ -380,7 +402,12 @@ STATIC_PAGES = {
     "/price/usdt-upbit/": ("시세", "업비트 USDT 시세", "업비트 원화마켓의 테더 가격과 김프를 확인합니다."),
     "/price/usdt-bithumb/": ("시세", "빗썸 USDT 시세", "빗썸 원화마켓의 테더 가격과 김프를 확인합니다."),
     "/price/btc/": ("시세", "비트코인 김치프리미엄", "업비트와 바이낸스의 비트코인 가격 차이를 추적합니다."),
+    "/calc/": ("도구", "코인 계산기 모음", "김프·변환·평단가·수익률·복리 계산기를 무료로 제공합니다."),
     "/calc/kimp/": ("도구", "김프 계산기", "국내가·해외가·환율만 넣으면 김프가 바로 계산됩니다."),
+    "/calc/convert/": ("도구", "원화·달러·USDT 변환기", "환율과 테더 시세를 동시에 반영하는 3단 변환기입니다."),
+    "/calc/average/": ("도구", "평단가·물타기 계산기", "추가 매수 후 새 평단가를 즉시 계산합니다."),
+    "/calc/profit/": ("도구", "수익률 계산기", "수수료 포함 실제 손익·본전가를 계산합니다."),
+    "/calc/compound/": ("도구", "복리 계산기", "회당 수익률 반복 적용 결과를 시뮬레이션합니다."),
     "/history/": ("아카이브", "김치프리미엄 히스토리", "매일의 USDT 김프 기록을 날짜별로 쌓아갑니다."),
     "/news/": ("뉴스", "테더·스테이블코인 뉴스", "테더·스테이블코인·김프 관련 헤드라인을 자동 수집합니다."),
     "/guide/": ("가이드", "가이드 전체 보기", "김프·테더·스테이블코인 기초부터 차근차근 정리했습니다."),
@@ -652,6 +679,52 @@ def main():
                 render(TPL["calc-kimp-body"], dt),
                 jsonld_html=calc_faq_ld, nav="CALC", extra_scripts=CALC_JS)
     add_map("/calc/kimp/")
+
+    # 계산기 허브 + 추가 계산기 4종
+    calc_pages = [
+        ("calc-hub-body", "/calc/", "코인 계산기 모음 — 김프·평단가·수익률·변환·복리 | usdt.io.kr",
+         "김프 계산기부터 평단가·물타기, 수수료 포함 수익률, 원화·달러·USDT 변환, 복리 계산기까지 "
+         "설치 없이 무료로 쓰는 코인 계산기 모음입니다.", None,
+         [("어느 계산기를 써야 하나요?",
+           "국내외 가격 차이는 김프 계산기, 단위 변환은 변환기, 추가 매수 검토는 평단가 계산기, 실제 손익은 수익률 계산기를 사용하세요."),
+          ("입력한 값이 저장되거나 전송되나요?",
+           "아니요. 모든 계산은 브라우저 안에서만 실행되며 서버로 아무것도 전송하지 않습니다.")]),
+        ("calc-convert-body", "/calc/convert/", "원화 달러 USDT 변환 계산기 — 환율·테더 시세 자동 반영 | usdt.io.kr",
+         "원화↔달러↔테더(USDT)를 한 번에 변환합니다. 공개 환율과 업비트 USDT 시세가 자동 반영되어 "
+         "김프 차이까지 그대로 보입니다.", CALC_TOOLS_JS,
+         [("환전 수수료도 반영되나요?",
+           "아니요. 기준 시세만 적용합니다. 실제 환전은 우대율 스프레드, 거래소 매매는 거래 수수료가 추가됩니다."),
+          ("USDT 시세는 어느 거래소 기준인가요?",
+           "업비트 KRW-USDT 체결가 기준이며 10분마다 갱신됩니다. 직접 수정해 다른 가격으로 계산할 수도 있습니다.")]),
+        ("calc-average-body", "/calc/average/", "평단가 계산기 (물타기 계산기) — 추가매수 후 평단 바로 계산 | usdt.io.kr",
+         "보유 수량·평단가에 추가 매수를 더하면 새 평단가와 총 투자금이 바로 계산됩니다. "
+         "물타기 공식과 주의점까지 정리했습니다.", CALC_TOOLS_JS,
+         [("수량 대신 금액으로 계산할 수 있나요?",
+           "추가 매수 수량 칸에 매수 금액을 매수 가격으로 나눈 값을 넣으면 됩니다."),
+          ("수수료는 반영되나요?",
+           "평단가 계산기는 가격만 계산합니다. 수수료 포함 손익은 수익률 계산기를 사용하세요.")]),
+        ("calc-profit-body", "/calc/profit/", "코인 수익률 계산기 — 수수료 포함 손익·본전가 계산 | usdt.io.kr",
+         "매수가·매도가·수량에 거래 수수료까지 반영해 실제 손익과 수익률, 본전가를 계산합니다.",
+         CALC_TOOLS_JS,
+         [("아직 안 팔았는데 평가손익을 보려면요?",
+           "매도가 칸에 현재가를 넣으면 지금 매도 기준의 평가손익이 계산됩니다."),
+          ("세금도 계산해주나요?",
+           "가상자산 과세는 시행 시기와 세부 기준이 확정 단계가 아니라 반영하지 않았습니다.")]),
+        ("calc-compound-body", "/calc/compound/", "복리 계산기 — 회차별 복리 수익 시뮬레이션 | usdt.io.kr",
+         "원금·회당 수익률·반복 횟수로 복리 결과를 계산합니다. 추가 납입과 마이너스 수익률 "
+         "시나리오도 지원합니다.", CALC_TOOLS_JS,
+         [("'회'는 일·월·년 중 뭔가요?",
+           "단위는 자유입니다. 회당 수익률과 횟수의 단위만 맞추면 됩니다."),
+          ("수익이 보장되는 계산인가요?",
+           "아니요. 매회 같은 수익률이라는 가정의 산술 결과일 뿐이며 실제 수익률은 일정하지 않습니다.")]),
+    ]
+    for tpl_name, path, title, desc, extra, faqs in calc_pages:
+        out_rel = "calc/index.html" if path == "/calc/" else path.strip("/").replace("/", os.sep) + os.sep + "index.html"
+        render_page(out_rel, path, title, desc,
+                    render(TPL[tpl_name], dt),
+                    jsonld_html=faq_ld(faqs), nav="CALC",
+                    extra_scripts=extra or "")
+        add_map(path)
 
     # /history/ + 일별 페이지
     hist_dir = os.path.join(DATA_DIR, "history")

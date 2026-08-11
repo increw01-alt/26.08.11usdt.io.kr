@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>복리 계산기 — 회차별 복리 수익 시뮬레이션 | usdt.io.kr</title>
+<meta name="description" content="원금·회당 수익률·반복 횟수로 복리 결과를 계산합니다. 추가 납입과 마이너스 수익률 시나리오도 지원합니다.">
+<link rel="canonical" href="https://usdt.io.kr/calc/compound/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="복리 계산기 — 회차별 복리 수익 시뮬레이션 | usdt.io.kr">
+<meta property="og:description" content="원금·회당 수익률·반복 횟수로 복리 결과를 계산합니다. 추가 납입과 마이너스 수익률 시나리오도 지원합니다.">
+<meta property="og:url" content="https://usdt.io.kr/calc/compound/">
+<meta property="og:site_name" content="usdt.io.kr">
+<meta property="og:locale" content="ko_KR">
+<meta name="twitter:card" content="summary">
+<!-- 서치콘솔/서치어드바이저 인증 메타태그는 아래에 추가 -->
+<!-- <meta name="google-site-verification" content=""> -->
+<!-- <meta name="naver-site-verification" content=""> -->
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+<script>
+(function(){try{var t=localStorage.getItem("theme");if(t)document.documentElement.setAttribute("data-theme",t);}catch(e){}})();
+</script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="/assets/css/tokens.css">
+<link rel="stylesheet" href="/assets/css/site.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "'회'는 일·월·년 중 뭔가요?", "acceptedAnswer": {"@type": "Answer", "text": "단위는 자유입니다. 회당 수익률과 횟수의 단위만 맞추면 됩니다."}}, {"@type": "Question", "name": "수익이 보장되는 계산인가요?", "acceptedAnswer": {"@type": "Answer", "text": "아니요. 매회 같은 수익률이라는 가정의 산술 결과일 뿐이며 실제 수익률은 일정하지 않습니다."}}]}</script>
+</head>
+<body>
+<header class="site-header">
+  <div class="container">
+    <a class="logo" href="/">
+      <img src="/assets/favicon.svg" alt="" width="26" height="26">
+      usdt.io.kr
+      <span class="tag">디지털 달러의 기준</span>
+    </a>
+    <nav class="site-nav" aria-label="주요 메뉴">
+      <a href="/price/usdt/">시세</a>
+      <a href="/calc/" aria-current="page">계산기</a>
+      <a href="/history/">히스토리</a>
+      <a href="/news/">뉴스</a>
+      <a href="/guide/">가이드</a>
+      <a href="/insight/">인사이트</a>
+    </nav>
+    <div class="header-spacer"></div>
+    <button class="theme-toggle" id="theme-toggle" aria-label="다크 모드 전환" title="다크 모드 전환">◐</button>
+  </div>
+</header>
+
+<main>
+<nav class="breadcrumb container" aria-label="현재 위치">
+  <a href="/">홈</a><span class="sep">›</span><a href="/calc/">계산기</a><span class="sep">›</span>복리
+</nav>
+
+<section class="hero" style="padding-top:14px;">
+  <div class="container">
+    <h1>복리 계산기</h1>
+    <p class="sub">원금에 회당 수익률이 반복 적용되면 결과가 어떻게 되는지 시뮬레이션합니다. 회차마다 추가 납입하는 경우도 지원합니다.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="card calc-card">
+      <form id="cp-form" onsubmit="return false;">
+        <div class="calc-field">
+          <label for="cp-principal">원금 (원)</label>
+          <input type="text" id="cp-principal" inputmode="decimal" placeholder="예: 1000000" autocomplete="off">
+        </div>
+        <div class="calc-field" style="display:flex;gap:12px;">
+          <div style="flex:1;">
+            <label for="cp-rate">회당 수익률 (%)</label>
+            <input type="text" id="cp-rate" inputmode="decimal" placeholder="예: 1 또는 -0.5" autocomplete="off">
+          </div>
+          <div style="flex:1;">
+            <label for="cp-periods">반복 횟수 (회)</label>
+            <input type="text" id="cp-periods" inputmode="decimal" placeholder="예: 12" autocomplete="off">
+          </div>
+        </div>
+        <div class="calc-field">
+          <label for="cp-add">회당 추가 납입 (원, 선택)</label>
+          <input type="text" id="cp-add" inputmode="decimal" value="0" autocomplete="off">
+        </div>
+        <div class="calc-result">
+          <div class="big num" id="cp-out">—</div>
+          <div class="desc num" id="cp-desc"></div>
+        </div>
+      </form>
+    </div>
+    <div class="callout warn" style="margin-top:18px;">
+      <p><strong>주의:</strong> 이 계산기는 "매회 같은 수익률"이라는 가정의 산술 결과일 뿐입니다. 실제 투자 수익률은 일정하지 않으며 손실 회차가 섞이면 결과가 크게 달라집니다. 수익 보장 시뮬레이션이 아닙니다.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <h2>복리가 작동하는 방식</h2>
+    <div class="card">
+      <p style="margin-top:0;"><strong>최종 금액 = 원금 × (1 + 회당 수익률)<sup>횟수</sup></strong> — 수익이 원금에 합쳐져 다음 회차의 기준이 되는 구조입니다.</p>
+      <p>예: 100만 원에 월 1%씩 12개월이면 100만 × 1.01¹² ≈ <strong>112.7만 원</strong>. 단리(12만 원)보다 커지는 차이가 복리 효과입니다. 반대로 회당 -1%면 12회 뒤 약 88.6만 원으로, 손실도 같은 방식으로 누적됩니다.</p>
+      <p style="margin-bottom:0;">마이너스 수익률도 입력할 수 있으니 하락 시나리오도 함께 계산해보세요.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section faq" aria-label="자주 묻는 질문">
+  <div class="container">
+    <h2>자주 묻는 질문</h2>
+    <details>
+      <summary>'회'는 일·월·년 중 뭔가요?</summary>
+      <p>단위는 자유입니다. 회당 수익률과 횟수의 단위만 맞추면 됩니다. 월 1%로 1년이면 12회, 연 5%로 10년이면 10회입니다.</p>
+    </details>
+    <details>
+      <summary>추가 납입은 언제 반영되나요?</summary>
+      <p>각 회차가 시작될 때 납입하고 그 회차의 수익률을 함께 적용받는 방식(기시 납입)으로 계산합니다.</p>
+    </details>
+    <details>
+      <summary>스테이킹·예치 수익도 계산할 수 있나요?</summary>
+      <p>회당 지급률을 알면 같은 방식으로 계산할 수 있습니다. 다만 실제 상품은 지급률 변동·해지 조건 등이 있으니 산술 참고용으로만 쓰세요.</p>
+    </details>
+  </div>
+</section>
+
+<section class="section" aria-label="다른 계산기">
+  <div class="container">
+    <h2 class="section-title">다른 계산기</h2>
+    <div class="footer-nav" style="margin-top:12px;">
+      <a class="btn ghost" href="/calc/kimp/">김프 계산기</a>
+      <a class="btn ghost" href="/calc/convert/">변환 계산기</a>
+      <a class="btn ghost" href="/calc/average/">평단가 계산기</a>
+      <a class="btn ghost" href="/calc/profit/">수익률 계산기</a>
+      <a class="btn ghost" href="/calc/compound/">복리 계산기</a>
+      <a class="btn ghost" href="/calc/">전체 보기</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-nav">
+      <a href="/price/usdt/">USDT 시세</a>
+      <a href="/calc/">계산기 모음</a>
+      <a href="/history/">김프 히스토리</a>
+      <a href="/news/">뉴스</a>
+      <a href="/guide/">가이드</a>
+      <a href="/insight/">인사이트</a>
+    </div>
+    <p class="disclaimer">본 사이트는 시세·시장 정보 제공 목적이며 투자 권유가 아닙니다. 가상자산 매매·중개·환전 서비스를 제공하지 않습니다. 표시 시세는 각 거래소 공개 API 기준이며 지연될 수 있습니다. 가상자산 투자는 원금 손실 위험이 있으며, 모든 투자 판단의 책임은 이용자 본인에게 있습니다.</p>
+    <p class="copy">© 2026 usdt.io.kr · 데이터: 업비트·빗썸·바이낸스 공개 API, 환율 공개 API · 갱신 2026-08-11 13:16 KST</p>
+  </div>
+</footer>
+
+<script src="/assets/js/site.js" defer></script>
+<script src="/assets/js/calc-tools.js" defer></script>
+</body>
+</html>
