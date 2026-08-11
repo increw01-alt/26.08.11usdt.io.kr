@@ -19,7 +19,7 @@ SITE_DIR = os.path.join(ROOT, "site")
 DATA_DIR = os.path.join(SITE_DIR, "data")
 BASE_URL = "https://usdt.io.kr"
 
-NAV_KEYS = ("PRICE", "CALC", "HISTORY", "NEWS", "GUIDE", "INSIGHT")
+NAV_KEYS = ("CHART", "PRICE", "CALC", "HISTORY", "NEWS", "GUIDE", "INSIGHT")
 
 COIN_NAMES = {"BTC": "비트코인", "ETH": "이더리움", "XRP": "리플", "SOL": "솔라나",
               "DOGE": "도지코인", "ADA": "에이다", "TRX": "트론"}
@@ -131,6 +131,7 @@ daily_points = {"points": [
     for d in daily.get("days", []) if d.get("kimp_close") is not None]}
 daily_json = json.dumps(daily_points, ensure_ascii=False, separators=(",", ":"))
 news = load_json(os.path.join(DATA_DIR, "news.json"), {}) or {}
+compare = load_json(os.path.join(DATA_DIR, "compare.json"), {}) or {}
 
 today_kst = datetime.now(KST).strftime("%Y-%m-%d")
 updated_kst = latest.get("updated_kst", "수집 준비 중")
@@ -410,6 +411,8 @@ STATIC_PAGES = {
     "/calc/compound/": ("도구", "복리 계산기", "회당 수익률 반복 적용 결과를 시뮬레이션합니다."),
     "/history/": ("아카이브", "김치프리미엄 히스토리", "매일의 USDT 김프 기록을 날짜별로 쌓아갑니다."),
     "/news/": ("뉴스", "테더·스테이블코인 뉴스", "테더·스테이블코인·김프 관련 헤드라인을 자동 수집합니다."),
+    "/chart/": ("차트", "김프·코인·매크로 차트", "TradingView 기반 고급 차트에서 김프를 수식으로 실계산합니다."),
+    "/price/compare/": ("시세", "전 코인 김프 비교", "업비트·바이낸스 공통 상장 코인의 김프를 정렬·검색합니다."),
     "/guide/": ("가이드", "가이드 전체 보기", "김프·테더·스테이블코인 기초부터 차근차근 정리했습니다."),
     "/insight/": ("인사이트", "인사이트 전체 보기", "컴퓨트달러 등 디지털 달러의 다음 구조를 다룹니다."),
 }
@@ -816,6 +819,51 @@ def main():
                 render(TPL["history-index-body"], hist_tokens),
                 jsonld_html=ld_dataset, nav="HISTORY", extra_scripts=CHART_JS)
     add_map("/history/")
+
+    # /chart/ — TradingView 고급 차트
+    render_page("chart/index.html", "/chart/",
+                "김프 차트 — BTC·USDT 김치프리미엄, 코인·매크로 고급 차트 | 테더뷰",
+                "TradingView 기반 고급 차트. BTC·USDT 김치프리미엄을 업비트·바이낸스·환율 시세로 "
+                "실계산해 그리고, 도미넌스·환율·나스닥·금까지 한 화면에서 봅니다.",
+                render(TPL["chart-body"], dt), nav="CHART",
+                extra_scripts='<script src="/assets/js/chart-page.js" defer></script>')
+    add_map("/chart/")
+
+    # /price/compare/ — 전 코인 김프 비교
+    def fmt_price_any(v):
+        if v is None:
+            return "—"
+        if v >= 1000:
+            return fmt_price_krw(v)
+        if v >= 1:
+            return fmt_num(v, 2)
+        return fmt_num(v, 4)
+
+    comp_rows = []
+    for c in compare.get("coins", []):
+        comp_rows.append(
+            f'          <tr data-name="{esc(c["name"])} {c["sym"]}" data-krw="{c["krw"]}" '
+            f'data-usd="{c["usd"]}" data-kimp="{c["kimp"] if c["kimp"] is not None else ""}" '
+            f'data-change="{c["change"]}" data-vol="{c["vol"]:.0f}">'
+            f'<td>{esc(c["name"])} <span style="color:var(--ink-3);font-size:12px;">{c["sym"]}</span></td>'
+            f'<td class="r num">{fmt_price_any(c["krw"])}원</td>'
+            f'<td class="r num">${fmt_usd(c["usd"])}</td>'
+            f'<td class="r num {cls_of(c["kimp"])}">{fmt_pct(c["kimp"])}</td>'
+            f'<td class="r num {cls_of(c["change"])}">{fmt_pct(c["change"])}</td>'
+            f'<td class="r num">{fmt_vol(c["vol"])}</td></tr>')
+    comp_tokens = dict(dt)
+    comp_tokens.update({
+        "COMPARE_COUNT": str(len(comp_rows)) if comp_rows else "0",
+        "COMPARE_ROWS": ("\n".join(comp_rows) if comp_rows else
+                         '          <tr><td colspan="6" style="color:var(--ink-2);">비교 데이터 수집 준비 중입니다. 파이프라인 가동 후 채워집니다.</td></tr>'),
+    })
+    render_page("price/compare/index.html", "/price/compare/",
+                "전 코인 김치프리미엄 비교 — 업비트 vs 바이낸스 | 테더뷰",
+                f"업비트·바이낸스 공통 상장 코인 {len(comp_rows)}개의 김프를 한 표에서 비교합니다. "
+                "김프·전일比·거래대금으로 정렬하고 코인 이름으로 검색하세요. 10분마다 갱신.",
+                render(TPL["price-compare-body"], comp_tokens), nav="PRICE",
+                extra_scripts='<script src="/assets/js/table-sort.js" defer></script>')
+    add_map("/price/compare/")
 
     # /news/
     news_updated = "수집 준비 중"

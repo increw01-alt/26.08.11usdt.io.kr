@@ -1,0 +1,48 @@
+<section class="hero compact">
+  <div class="container">
+    <span class="eyebrow">시세 비교</span>
+    <h1>전 코인 김치프리미엄 비교 — 업비트 vs 바이낸스</h1>
+    <p class="sub">업비트 원화마켓과 바이낸스 USDT마켓에 함께 상장된 코인 {{COMPARE_COUNT}}개의 김프를 한 표에서 비교합니다. 헤더를 누르면 정렬됩니다.</p>
+    <span class="updated-badge{{STALE_CLASS}}"><span class="dot"></span>10분마다 갱신 · {{UPDATED_KST}} 기준 · 환율 {{FX_USDKRW}}원</span>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="card" style="padding:16px 18px;">
+      <div style="display:flex;gap:14px;align-items:center;flex-wrap:wrap;">
+        <input type="text" id="compare-search" placeholder="코인 이름·심볼 검색 (예: 리플, XRP)"
+               style="flex:1;min-width:200px;font-size:15px;font-family:var(--font);padding:10px 14px;border:1px solid var(--border-strong);border-radius:var(--radius-sm);background:var(--surface);color:var(--ink);">
+        <span id="compare-count" class="section-desc" style="margin:0;">{{COMPARE_COUNT}}개 표시 중</span>
+      </div>
+    </div>
+    <div class="table-wrap" style="margin-top:14px;">
+      <table id="compare-table">
+        <thead>
+          <tr>
+            <th>코인</th>
+            <th class="r" data-sort="krw">업비트(원)</th>
+            <th class="r" data-sort="usd">바이낸스($)</th>
+            <th class="r" data-sort="kimp">김프</th>
+            <th class="r" data-sort="change">전일比</th>
+            <th class="r" data-sort="vol">거래대금(24h)</th>
+          </tr>
+        </thead>
+        <tbody>
+{{COMPARE_ROWS}}
+        </tbody>
+      </table>
+    </div>
+    <p class="section-desc" style="margin-top:12px;">기준: 업비트 KRW마켓 체결가 ↔ 바이낸스 USDT마켓 현재가 × 달러 환율(1 USDT = 1달러 가정). 거래대금은 업비트 24시간 기준, 상위 {{COMPARE_COUNT}}개 코인만 표시합니다. USDT 자체의 김프는 <a href="/price/usdt/">USDT 통합 시세</a>에서 환율 대비로 계산합니다.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <h2>왜 코인마다 김프가 다른가요?</h2>
+    <div class="card">
+      <p style="margin-top:0;">김프는 코인별 국내 수요·유동성에 따라 다르게 벌어집니다. 국내 거래 비중이 높은 코인일수록 김프 변동이 크고, 대형 코인일수록 차익거래가 빨라 김프가 빨리 좁혀지는 경향이 있습니다. 표에서 김프 열을 눌러 정렬하면 지금 가장 크게 벌어진 코인을 바로 찾을 수 있습니다.</p>
+      <p style="margin-bottom:0;"><a href="/guide/kimchi-premium/">김치프리미엄이란? →</a> · <a href="/guide/kimp-arbitrage-risks/">김프 차익거래가 위험한 이유 →</a> · <a href="/chart/">고급 차트에서 김프 추이 보기 →</a></p>
+    </div>
+  </div>
+</section>

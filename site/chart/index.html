@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>김프 차트 — BTC·USDT 김치프리미엄, 코인·매크로 고급 차트 | 테더뷰</title>
+<meta name="description" content="TradingView 기반 고급 차트. BTC·USDT 김치프리미엄을 업비트·바이낸스·환율 시세로 실계산해 그리고, 도미넌스·환율·나스닥·금까지 한 화면에서 봅니다.">
+<link rel="canonical" href="https://usdt.io.kr/chart/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="김프 차트 — BTC·USDT 김치프리미엄, 코인·매크로 고급 차트 | 테더뷰">
+<meta property="og:description" content="TradingView 기반 고급 차트. BTC·USDT 김치프리미엄을 업비트·바이낸스·환율 시세로 실계산해 그리고, 도미넌스·환율·나스닥·금까지 한 화면에서 봅니다.">
+<meta property="og:url" content="https://usdt.io.kr/chart/">
+<meta property="og:site_name" content="테더뷰">
+<meta property="og:locale" content="ko_KR">
+<meta name="twitter:card" content="summary">
+<!-- 서치콘솔/서치어드바이저 인증 메타태그는 아래에 추가 -->
+<!-- <meta name="google-site-verification" content=""> -->
+<!-- <meta name="naver-site-verification" content=""> -->
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+<script>
+(function(){try{var t=localStorage.getItem("theme");if(t)document.documentElement.setAttribute("data-theme",t);}catch(e){}})();
+</script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="/assets/css/tokens.css">
+<link rel="stylesheet" href="/assets/css/site.css">
+
+</head>
+<body>
+<header class="site-header">
+  <div class="container">
+    <a class="logo" href="/">
+      <img src="/assets/favicon.svg" alt="" width="26" height="26">
+      테더뷰
+      <span class="tag">디지털 달러의 기준</span>
+    </a>
+    <nav class="site-nav" aria-label="주요 메뉴">
+      <a href="/chart/" aria-current="page">차트</a>
+      <a href="/price/usdt/">시세</a>
+      <a href="/price/compare/">김프 비교</a>
+      <a href="/calc/">계산기</a>
+      <a href="/history/">히스토리</a>
+      <a href="/news/">뉴스</a>
+      <a href="/guide/">가이드</a>
+      <a href="/insight/">인사이트</a>
+    </nav>
+    <div class="header-spacer"></div>
+    <button class="theme-toggle" id="theme-toggle" aria-label="다크 모드 전환" title="다크 모드 전환">◐</button>
+  </div>
+</header>
+
+<main>
+<section class="hero compact">
+  <div class="container">
+    <span class="eyebrow">차트</span>
+    <h1>김프 · 코인 · 매크로 차트</h1>
+    <p class="sub">TradingView 차트로 캔들·타임프레임·보조지표를 자유롭게 씁니다. 김치프리미엄은 업비트·바이낸스·환율 시세를 수식으로 실계산해 그립니다.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="card chart-card">
+      <div class="chart-head">
+        <h3 id="tv-current-label">BTC 바이낸스</h3>
+        <span class="range">차트 제공: TradingView · 심볼 변경/지표 추가 가능</span>
+      </div>
+      <div class="tv-picker" id="tv-series-nav" role="tablist" aria-label="차트 시리즈 선택"></div>
+      <div class="tv-wrap" id="tv-chart">
+        <div class="chart-empty">차트를 불러오는 중입니다…</div>
+      </div>
+    </div>
+    <p class="section-desc" style="margin-top:12px;">김치프리미엄 차트는 <span class="num">100 × (업비트가 ÷ (바이낸스가 × 환율) − 1)</span> 수식의 실시세 계산 결과이며, USDT 김프는 환율 대비 수식을 사용합니다. 차트 데이터는 TradingView와 각 거래소 기준입니다.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <h2>함께 보면 좋은 페이지</h2>
+    <div class="card-grid">
+      <a class="card card-link" href="/price/compare/">
+        <div class="card-cat">시세</div>
+        <h3>전 코인 김프 비교</h3>
+        <p>업비트와 바이낸스에 함께 상장된 코인의 김프를 한 표에서 정렬·검색합니다.</p>
+      </a>
+      <a class="card card-link" href="/">
+        <div class="card-cat">현황판</div>
+        <h3>USDT 김프 현황판</h3>
+        <p>테더 시세·김프·뉴스를 10분 단위로 갱신합니다.</p>
+      </a>
+      <a class="card card-link" href="/guide/how-to-check-kimp/">
+        <div class="card-cat">가이드</div>
+        <h3>김프 보는법</h3>
+        <p>김프 지표를 읽는 법과 확인 루틴을 정리했습니다.</p>
+      </a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-nav">
+      <a href="/chart/">차트</a>
+      <a href="/price/usdt/">USDT 시세</a>
+      <a href="/price/compare/">전 코인 김프 비교</a>
+      <a href="/calc/">계산기 모음</a>
+      <a href="/history/">김프 히스토리</a>
+      <a href="/news/">뉴스</a>
+      <a href="/guide/">가이드</a>
+      <a href="/insight/">인사이트</a>
+    </div>
+    <p class="disclaimer">본 사이트는 시세·시장 정보 제공 목적이며 투자 권유가 아닙니다. 가상자산 매매·중개·환전 서비스를 제공하지 않습니다. 표시 시세는 각 거래소 공개 API 기준이며 지연될 수 있습니다. 가상자산 투자는 원금 손실 위험이 있으며, 모든 투자 판단의 책임은 이용자 본인에게 있습니다. 테더뷰는 Tether Limited 및 어떤 거래소·발행사와도 제휴 관계가 없는 독립 정보 사이트입니다.</p>
+    <p class="copy">© 2026 테더뷰 (usdt.io.kr) · 데이터: 업비트·빗썸·바이낸스 공개 API, 환율 공개 API · 갱신 2026-08-11 16:35 KST</p>
+  </div>
+</footer>
+
+<script src="/assets/js/site.js" defer></script>
+<script src="/assets/js/chart-page.js" defer></script>
+</body>
+</html>

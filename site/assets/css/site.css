@@ -328,6 +328,18 @@ td .spark { margin-left: auto; }
 .news-list .meta { font-size: 12px; color: var(--ink-3); margin-top: 3px; }
 .news-page-list .news-list a { font-size: 15px; }
 
+/* TradingView 차트 페이지 */
+.tv-wrap { height: 560px; border-radius: var(--radius-sm); overflow: hidden; background: var(--surface-2); }
+@media (max-width: 640px) { .tv-wrap { height: 420px; } }
+.tv-picker { display: flex; gap: 6px; flex-wrap: wrap; margin: 10px 0 14px; }
+.tv-pick {
+  border: 1px solid var(--border); background: var(--surface);
+  color: var(--ink-2); border-radius: 20px; padding: 6px 13px;
+  font-size: 13px; font-weight: 600; font-family: var(--font); cursor: pointer;
+}
+.tv-pick:hover { border-color: var(--accent); color: var(--ink); }
+.tv-pick.active { background: var(--accent-soft); color: var(--accent-strong); border-color: var(--accent); }
+
 /* 히어로 컴팩트 (대시보드형 홈) */
 .hero.compact { padding: 26px 0 4px; }
 .hero.compact h1 { font-size: clamp(21px, 3.2vw, 27px); }

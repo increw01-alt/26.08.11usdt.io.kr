@@ -31,6 +31,13 @@ BITHUMB_URL = "https://api.bithumb.com/public/ticker/USDT_KRW"
 BINANCE_URL = ("https://api.binance.com/api/v3/ticker/price?symbols="
                + urllib.parse.quote(json.dumps([c + "USDT" for c in COINS],
                                                separators=(",", ":"))))
+UPBIT_MARKETS_URL = "https://api.upbit.com/v1/market/all"
+UPBIT_TICKER_URL = "https://api.upbit.com/v1/ticker?markets={markets}"
+BINANCE_ALL_URL = "https://api.binance.com/api/v3/ticker/price"
+BINANCE_INFO_URL = ("https://api.binance.com/api/v3/exchangeInfo"
+                    "?symbolStatus=TRADING&showPermissionSets=false")
+COMPARE_LIMIT = 120  # 거래대금 상위 N개만 비교 테이블에 노출
+COMPARE_OUTLIER_PP = 12.0  # 중앙값에서 ±N%p 벗어나면 제외 (상폐 잔가·동명이코인 방지)
 ERAPI_URL = "https://open.er-api.com/v6/latest/USD"
 EXIM_URL = ("https://oapi.koreaexim.go.kr/site/program/financial/exchangeJSON"
             "?authkey={key}&searchdate={date}&data=AP01")
@@ -202,6 +209,59 @@ def collect_news(prev_news):
             "items": items[:48]}
 
 
+def collect_compare(usdkrw, kimp_usdt):
+    """업비트 KRW마켓 ∩ 바이낸스 USDT마켓 전 코인 김프 비교."""
+    markets = fetch_json(UPBIT_MARKETS_URL)
+    krw_markets = [(m["market"], m["korean_name"]) for m in markets
+                   if m["market"].startswith("KRW-")]
+    names = dict(krw_markets)
+    # 업비트 티커 (100개씩 분할 호출)
+    tickers = []
+    codes = [m for m, _ in krw_markets]
+    for i in range(0, len(codes), 100):
+        tickers += fetch_json(UPBIT_TICKER_URL.format(markets=",".join(codes[i:i + 100])))
+    # 바이낸스: 거래중(TRADING) 심볼만 인정 — 상장폐지 코인의 잔존 가격 배제
+    active = {s["symbol"] for s in fetch_json(BINANCE_INFO_URL)["symbols"]}
+    busd = {r["symbol"]: float(r["price"]) for r in fetch_json(BINANCE_ALL_URL)
+            if r["symbol"] in active}
+    coins = []
+    for row in tickers:
+        sym = row["market"].replace("KRW-", "")
+        if sym == "USDT":
+            continue
+        b = busd.get(sym + "USDT")
+        if not b:
+            continue
+        kimp = premium(row["trade_price"], b, usdkrw)
+        coins.append({
+            "sym": sym,
+            "name": names.get(row["market"], sym).replace("KRW-", ""),
+            "krw": row["trade_price"],
+            "usd": b,
+            "kimp": kimp,
+            "change": round(row["signed_change_rate"] * 100, 2),
+            "vol": row["acc_trade_price_24h"],
+        })
+    # 중앙값 이상치 필터 — 동명이코인·일시 거래정지 등 비정상 김프 배제
+    kimps = sorted(c["kimp"] for c in coins if c["kimp"] is not None)
+    if kimps:
+        median = kimps[len(kimps) // 2]
+        outliers = [c["sym"] for c in coins
+                    if c["kimp"] is None or abs(c["kimp"] - median) > COMPARE_OUTLIER_PP]
+        if outliers:
+            print(f"[info] 비교 제외(이상치 ±{COMPARE_OUTLIER_PP}%p): {','.join(outliers)}")
+        coins = [c for c in coins
+                 if c["kimp"] is not None and abs(c["kimp"] - median) <= COMPARE_OUTLIER_PP]
+    coins.sort(key=lambda c: c["vol"], reverse=True)
+    coins = coins[:COMPARE_LIMIT]
+    return {
+        "updated_iso": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "usdkrw": round(usdkrw, 2),
+        "kimp_usdt": kimp_usdt,
+        "coins": coins,
+    }
+
+
 def premium(domestic_krw, overseas_usd, usdkrw):
     base = overseas_usd * usdkrw
     if not base:
@@ -305,6 +365,13 @@ def main():
     save_json(os.path.join(DATA_DIR, "latest.json"), latest)
     print("latest.json 갱신:", latest["updated_kst"], "KST",
           "(stale: %s)" % ",".join(stale_sources) if stale_sources else "")
+
+    # 전 코인 김프 비교 (실패 시 기존 파일 유지)
+    compare = try_source("compare", lambda: collect_compare(
+        usdkrw, derived.get("kimp_usdt_upbit")), None)
+    if compare and compare["coins"]:
+        save_json(os.path.join(DATA_DIR, "compare.json"), compare)
+        print("compare.json 갱신:", len(compare["coins"]), "코인")
 
     # 뉴스 (시간당 1회)
     news_path = os.path.join(DATA_DIR, "news.json")
