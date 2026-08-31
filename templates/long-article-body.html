@@ -1,0 +1,68 @@
+<nav class="breadcrumb container" aria-label="현재 위치">
+  <a href="/">홈</a><span class="sep">›</span><a href="{{SECTION_URL}}">{{SECTION_NAME}}</a><span class="sep">›</span><span aria-current="page">{{ARTICLE_TITLE_SHORT}}</span>
+</nav>
+
+<article class="article long-article">
+  <div class="container">
+    <header class="article-head long-article-head">
+      <span class="long-article-eyebrow">{{ARTICLE_EYEBROW}}</span>
+      <h1>{{ARTICLE_H1}}</h1>
+      <p class="long-article-hero-lead">{{HERO_LEAD}}</p>
+      <div class="article-meta">
+        <span>{{SECTION_NAME}}</span>
+        <span>발행 {{DATE_PUBLISHED}}</span>
+        <span>수정 {{DATE_MODIFIED}}</span>
+      </div>
+      <a class="long-article-start" href="#core-check">핵심 내용부터 확인 <span aria-hidden="true">↓</span></a>
+    </header>
+  </div>
+
+  {{EXCHANGE_TABS}}
+
+  <div class="article-template-v1" id="article-content">
+    <article class="article-v1-article">
+      <aside class="article-v1-notice" id="core-check" data-article-reveal="scale" aria-labelledby="core-check-title">
+        <p class="article-v1-notice-label">USDT CORE CHECK</p>
+        <h2 id="core-check-title">{{CORE_TITLE}}</h2>
+        <ul class="article-v1-check-grid">
+{{CORE_CHECKS}}
+        </ul>
+      </aside>
+
+      <nav class="article-v1-toc" data-article-reveal="up" aria-label="페이지 목차">
+        <h2>목차</h2>
+        <ol>
+{{TOC_ITEMS}}
+        </ol>
+      </nav>
+
+      <a class="article-v1-live-strip" href="/price/usdt/" data-article-reveal="left">
+        <span><strong>구매 전 현재 가격 확인</strong> 원·달러 환율과 국내 USDT 가격 차이를 먼저 비교하세요.</span>
+        <span class="article-v1-live-link">실시간 시세 보기 →</span>
+      </a>
+
+{{ARTICLE_CONTENT}}
+
+{{FAQ_SECTION}}
+    </article>
+
+{{SOURCES_SECTION}}
+
+    <section class="article-v1-consultation" data-article-reveal="scale" aria-labelledby="article-next-step">
+      <div>
+        <p class="article-v1-consultation-label">TETHERVIEW · USDT INFORMATION</p>
+        <h2 id="article-next-step">{{CTA_TITLE}}</h2>
+        <p>{{CTA_DESC}}</p>
+        <a class="article-v1-button article-v1-button--light" href="{{CTA_URL}}">{{CTA_LABEL}}</a>
+        <p class="article-v1-disclaimer">테더뷰는 가상자산 거래·중개·보관·투자자문 서비스를 제공하지 않습니다. 이 페이지는 일반 정보 제공용이며 투자 권유가 아닙니다.</p>
+      </div>
+    </section>
+
+    <section class="long-article-related" data-article-reveal="up">
+      <h2>함께 읽으면 좋은 글</h2>
+      <div class="card-grid">
+{{RELATED_CARDS}}
+      </div>
+    </section>
+  </div>
+</article>

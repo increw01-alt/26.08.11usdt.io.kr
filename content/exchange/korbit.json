@@ -1,0 +1,29 @@
+{
+  "order": 4,
+  "layout": "long-form",
+  "nav": "EXCHANGE",
+  "title": "코빗 테더(USDT) 구매 방법 — 신한은행 입금부터 출금까지",
+  "title_short": "코빗에서 테더 구매하기",
+  "h1": "코빗 테더(USDT) 구매 방법",
+  "description": "신한은행 계좌 연결, 원화 입금, USDT/KRW 매수, 수수료 플랜과 출금 전 확인사항까지 코빗 테더 구매 과정을 설명합니다.",
+  "eyebrow": "KORBIT · USDT BUYING GUIDE",
+  "hero_lead": "신한은행 계좌를 이용해 코빗에 원화를 입금하고 USDT/KRW에서 테더를 구매하는 순서를 쉽게 풀었습니다.",
+  "date_published": "2026-08-31",
+  "date_modified": "2026-08-31",
+  "draft_noindex": true,
+  "hero_image": "/assets/images/usdt-buying-hero-tether.png",
+  "core_title": "코빗에서 구매 전 네 가지를 확인하세요",
+  "core_checks": ["본인 명의 신한은행 계좌와 고객확인", "USDT/KRW 시장과 주문 방향 확인", "현재 적용 수수료 플랜 점검", "출금 주소와 지원 네트워크 일치 확인"],
+  "faq": [
+    {"q": "코빗에서 원화로 테더를 직접 살 수 있나요?", "a": "코빗은 USDT/KRW 거래화면을 제공하고 있습니다. 매수 전 종목명과 시장을 확인하고 최신 거래 지원 상태를 앱에서 다시 확인하세요."},
+    {"q": "코빗 거래수수료는 얼마인가요?", "a": "선택한 수수료 플랜과 주문 방식 등에 따라 달라질 수 있습니다. 주문 전 코빗 수수료 플랜 화면에 표시되는 현재 조건을 확인하세요."},
+    {"q": "출금 네트워크는 어디에서 확인하나요?", "a": "USDT 출금 화면과 받는 거래소의 입금 화면에 표시된 네트워크를 양쪽에서 대조해야 합니다."}
+  ],
+  "sources": [
+    {"title": "코빗 USDT/KRW 거래화면", "url": "https://www.korbit.co.kr/trade/usdt-krw"},
+    {"title": "코빗 거래 수수료 플랜 안내", "url": "https://www.korbit.co.kr/events/fee-plan"},
+    {"title": "코빗 공식 서비스", "url": "https://lightning.korbit.co.kr/"}
+  ],
+  "related": ["/exchange/coinone/", "/exchange/gopax/", "/guide/how-to-buy-usdt/", "/price/usdt/"],
+  "cta": {"title": "구매 전 현재 USDT 가격을 확인하세요", "desc": "국내 테더 가격과 달러 환율 차이를 먼저 비교하면 주문 기준을 세우기 쉽습니다.", "url": "/price/usdt/", "label": "USDT 통합 시세 보기"}
+}

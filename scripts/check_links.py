@@ -18,7 +18,8 @@ for dirpath, _, files in os.walk(SITE):
         with open(path, encoding="utf-8") as f:
             html = f.read()
         for m in re.finditer(r'(?:href|src)="(/[^"#]*)', html):
-            url = m.group(1)
+            # 캐시 갱신용 쿼리 문자열은 실제 파일 경로 검사에서 제외한다.
+            url = m.group(1).split("?", 1)[0]
             if url.startswith("//") or url in checked:
                 continue
             checked.add(url)

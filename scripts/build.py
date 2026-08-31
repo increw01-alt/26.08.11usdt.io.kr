@@ -19,7 +19,7 @@ SITE_DIR = os.path.join(ROOT, "site")
 DATA_DIR = os.path.join(SITE_DIR, "data")
 BASE_URL = "https://usdt.io.kr"
 
-NAV_KEYS = ("CHART", "PRICE", "CALC", "HISTORY", "NEWS", "GUIDE", "INSIGHT")
+NAV_KEYS = ("CHART", "PRICE", "BUY", "EXCHANGE", "CALC", "HISTORY", "NEWS", "GUIDE", "INSIGHT")
 
 COIN_NAMES = {"BTC": "비트코인", "ETH": "이더리움", "XRP": "리플", "SOL": "솔라나",
               "DOGE": "도지코인", "ADA": "에이다", "TRX": "트론"}
@@ -358,13 +358,45 @@ def nav_tokens(active=None):
 
 
 def render_page(out_rel, canonical_path, title, description, body,
-                og_type="website", jsonld_html="", nav=None, extra_scripts=""):
+                og_type="website", jsonld_html="", nav=None, extra_scripts="",
+                robots_meta="", hero_image=""):
+    is_subpage = canonical_path not in ("/", "/404.html")
+    is_detail_page = is_subpage and og_type == "article"
+    if is_subpage:
+        video_file = "bitcoin-main.mp4" if is_detail_page else "bitcoin-main-2.mp4"
+        page_class = " subpage-detail-video-page" if is_detail_page else ""
+        if hero_image:
+            page_class += " subpage-image-hero-page"
+            hero_media = (
+                f'    <img class="subpage-hero-image" src="{esc(hero_image)}" alt="" '
+                'decoding="async" fetchpriority="high">\n'
+            )
+        else:
+            hero_media = (
+                '    <video class="subpage-hero-video" autoplay muted loop playsinline preload="metadata" tabindex="-1">\n'
+                f'      <source src="/assets/video/{video_file}" type="video/mp4">\n'
+                '    </video>\n'
+            )
+        body = (
+            f'<div class="subpage-video-page{page_class}">\n'
+            '  <div class="subpage-video-stage" aria-hidden="true">\n'
+            f'{hero_media}'
+            '    <div class="subpage-video-vignette"></div>\n'
+            '  </div>\n'
+            f'{body}\n'
+            '</div>'
+        )
     tokens = {
         "TITLE": esc(title),
         "DESCRIPTION": esc(description),
+        "ROBOTS_META": robots_meta,
         "CANONICAL_PATH": canonical_path,
         "OG_TYPE": og_type,
         "JSONLD": jsonld_html,
+        "BODY_CLASS": (
+            "subpage-video-page-body subpage-detail-video-page-body"
+            if is_detail_page else "subpage-video-page-body" if is_subpage else ""
+        ),
         "BODY": body,
         "EXTRA_SCRIPTS": extra_scripts,
         "FOOT_UPDATED": DATA_TOKENS["FOOT_UPDATED"],
@@ -417,6 +449,7 @@ STATIC_PAGES = {
     "/price/compare/": ("시세", "전 코인 김프 비교", "업비트·바이낸스 공통 상장 코인의 김프를 정렬·검색합니다."),
     "/guide/": ("가이드", "가이드 전체 보기", "김프·테더·스테이블코인 기초부터 차근차근 정리했습니다."),
     "/insight/": ("인사이트", "인사이트 전체 보기", "컴퓨트달러 등 디지털 달러의 다음 구조를 다룹니다."),
+    "/exchange/": ("거래소별", "거래소별 테더 구매 방법", "국내 5대 원화 거래소의 USDT 구매 순서를 비교합니다."),
 }
 
 
@@ -446,13 +479,16 @@ def load_articles(section):
     return articles
 
 
-def card_info(url, guide_map, insight_map):
+def card_info(url, guide_map, insight_map, exchange_map=None):
     if url in guide_map:
         a = guide_map[url]
         return ("가이드", a["title_short"], a["description"])
     if url in insight_map:
         a = insight_map[url]
         return ("인사이트", a["title_short"], a["description"])
+    if exchange_map and url in exchange_map:
+        a = exchange_map[url]
+        return ("거래소별", a["title_short"], a["description"])
     if url in STATIC_PAGES:
         return STATIC_PAGES[url]
     return None
@@ -476,14 +512,31 @@ def toc_items(body):
     return "\n".join(items)
 
 
-def faq_html_and_ld(faq):
+def long_toc_items(body, include_faq=False):
+    items = []
+    pattern = r'<section\s+id="([^"]+)"[^>]*>.*?<h2[^>]*>(.*?)</h2>'
+    for m in re.finditer(pattern, body, re.S):
+        title = re.sub(r"<[^>]+>", "", m.group(2)).strip()
+        items.append(f'          <li><a href="#{m.group(1)}">{title}</a></li>')
+    if include_faq:
+        items.append('          <li><a href="#faq">자주 묻는 질문</a></li>')
+    return "\n".join(items)
+
+
+def faq_html_and_ld(faq, long_form=False):
     if not faq:
         return "", None
-    parts = ['        <section class="faq" aria-label="자주 묻는 질문">',
-             "          <h2 id=\"faq\">자주 묻는 질문</h2>"]
+    if long_form:
+        parts = ['      <section id="faq" class="article-v1-section" data-article-reveal="up" aria-label="자주 묻는 질문">',
+                 '        <p class="article-v1-kicker">10 · 자주 묻는 질문</p>',
+                 '        <h2>테더 구매 FAQ</h2>',
+                 '        <div class="article-v1-faq-list">']
+    else:
+        parts = ['        <section class="faq" aria-label="자주 묻는 질문">',
+                 "          <h2 id=\"faq\">자주 묻는 질문</h2>"]
     entities = []
     for item in faq:
-        parts.append("          <details>")
+        parts.append('          <details class="faq-item">' if long_form else "          <details>")
         parts.append(f"            <summary>{esc(item['q'])}</summary>")
         parts.append(f"            <p>{esc(item['a'])}</p>")
         parts.append("          </details>")
@@ -491,22 +544,39 @@ def faq_html_and_ld(faq):
             "@type": "Question", "name": item["q"],
             "acceptedAnswer": {"@type": "Answer", "text": item["a"]},
         })
-    parts.append("        </section>")
+    if long_form:
+        parts.append("        </div>")
+        parts.append("      </section>")
+    else:
+        parts.append("        </section>")
     ld = {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": entities}
     return "\n".join(parts), ld
 
 
-def build_article(a, guide_map, insight_map):
-    section_name = "가이드" if a["section"] == "guide" else "인사이트"
+def exchange_tabs(active_slug=""):
+    exchanges = (("upbit", "업비트"), ("bithumb", "빗썸"),
+                 ("coinone", "코인원"), ("korbit", "코빗"), ("gopax", "고팍스"))
+    links = []
+    for slug, name in exchanges:
+        current = ' aria-current="page"' if slug == active_slug else ""
+        links.append(f'    <a href="/exchange/{slug}/"{current}>{name}</a>')
+    return ('<nav class="exchange-tabbar" aria-label="거래소별 테더 구매 방법">\n'
+            '  <span>거래소 선택</span>\n' + "\n".join(links) + "\n</nav>")
+
+
+def build_article(a, guide_map, insight_map, exchange_map=None):
+    section_names = {"guide": "가이드", "insight": "인사이트", "exchange": "거래소별"}
+    section_name = section_names.get(a["section"], a["section"])
     section_url = f"/{a['section']}/"
     related_cards = []
     for url in a.get("related", [])[:4]:
-        info = card_info(url, guide_map, insight_map)
+        info = card_info(url, guide_map, insight_map, exchange_map)
         if info:
             related_cards.append(card_html(url, *info))
         else:
             print(f"[warn] {a['url']}: 관련 링크 대상 없음 {url}")
-    faq_section, faq_ld = faq_html_and_ld(a.get("faq"))
+    long_form = a.get("layout") == "long-form"
+    faq_section, faq_ld = faq_html_and_ld(a.get("faq"), long_form=long_form)
 
     cta = a.get("cta") or {
         "title": "지금 USDT 김프 확인하기",
@@ -514,7 +584,8 @@ def build_article(a, guide_map, insight_map):
         "url": "/", "label": "김프 현황판 보기",
     }
 
-    body = render(TPL["article-body"], {
+    template_name = "long-article-body" if long_form else "article-body"
+    body_tokens = {
         "SECTION_URL": section_url,
         "SECTION_NAME": section_name,
         "ARTICLE_TITLE_SHORT": esc(a["title_short"]),
@@ -529,7 +600,37 @@ def build_article(a, guide_map, insight_map):
         "CTA_URL": cta["url"],
         "CTA_LABEL": esc(cta["label"]),
         "RELATED_CARDS": "\n".join(related_cards),
-    })
+        "EXCHANGE_TABS": exchange_tabs(a["slug"]) if a["section"] == "exchange" else "",
+    }
+    if long_form:
+        core_checks = "\n".join(
+            f'          <li><span aria-hidden="true">✓</span>{esc(item)}</li>'
+            for item in a.get("core_checks", [])[:4]
+        )
+        source_items = "\n".join(
+            f'          <li><a href="{item["url"]}" rel="noopener">{esc(item["title"])}</a></li>'
+            for item in a.get("sources", [])
+        )
+        sources_section = (
+            '    <section class="article-v1-sources" data-article-reveal="left" aria-label="공식 출처">\n'
+            '      <div>\n'
+            '        <h2>공식 출처와 확인 기준</h2>\n'
+            f'        <p>거래 지원, 수수료, 네트워크와 출금 규정은 변경될 수 있습니다. 공식 자료와 이용 서비스의 최신 화면에서 최종 확인하세요. (검토일: {a.get("date_modified", a["date_published"])})</p>\n'
+            '        <ul>\n'
+            f'{source_items}\n'
+            '        </ul>\n'
+            '      </div>\n'
+            '    </section>'
+        )
+        body_tokens.update({
+            "ARTICLE_EYEBROW": esc(a.get("eyebrow", "USDT INFORMATION GUIDE")),
+            "HERO_LEAD": esc(a.get("hero_lead", a["description"])),
+            "CORE_TITLE": esc(a.get("core_title", "진행 전에 핵심 조건을 확인하세요")),
+            "CORE_CHECKS": core_checks,
+            "TOC_ITEMS": long_toc_items(a["body"], include_faq=bool(a.get("faq"))),
+            "SOURCES_SECTION": sources_section,
+        })
+    body = render(TPL[template_name], body_tokens)
 
     lds = [{
         "@context": "https://schema.org",
@@ -553,12 +654,17 @@ def build_article(a, guide_map, insight_map):
     }]
     if faq_ld:
         lds.append(faq_ld)
+    if a.get("hero_image"):
+        lds[0]["image"] = BASE_URL + a["hero_image"]
 
     render_page(
         os.path.join(a["section"], a["slug"], "index.html"),
         a["url"], a["title"] + " | 테더뷰", a["description"], body,
         og_type="article", jsonld_html="".join(jsonld(x) for x in lds),
-        nav=a["section"].upper(),
+        nav=a.get("nav", a["section"].upper()),
+        robots_meta=('<meta name="robots" content="noindex,nofollow">'
+                     if a.get("draft_noindex") else ""),
+        hero_image=a.get("hero_image", ""),
     )
     add_map(a["url"], a.get("date_modified", a["date_published"]))
 
@@ -568,8 +674,10 @@ def build_article(a, guide_map, insight_map):
 def main():
     guides = load_articles("guide")
     insights = load_articles("insight")
+    exchanges = load_articles("exchange")
     guide_map = {a["url"]: a for a in guides}
     insight_map = {a["url"]: a for a in insights}
+    exchange_map = {a["url"]: a for a in exchanges}
 
     # 홈 카드
     featured = [a for a in guides if a.get("featured")] or guides
@@ -891,8 +999,8 @@ def main():
     add_map("/news/")
 
     # 가이드·인사이트 본문
-    for a in guides + insights:
-        build_article(a, guide_map, insight_map)
+    for a in guides + insights + exchanges:
+        build_article(a, guide_map, insight_map, exchange_map)
 
     # 색인 페이지
     for section, items, eyebrow, title, page_title, desc in (
@@ -903,14 +1011,20 @@ def main():
             ("insight", insights, "인사이트",
              "디지털 달러 인사이트",
              "인사이트 — 컴퓨트달러와 디지털 달러의 미래 | 테더뷰",
-             "컴퓨트달러, AI 에이전트 결제, 스테이블코인과 미국 국채 — 오늘의 시세 너머에서 벌어지는 달러 패권의 재편을 다룹니다.")):
+             "컴퓨트달러, AI 에이전트 결제, 스테이블코인과 미국 국채 — 오늘의 시세 너머에서 벌어지는 달러 패권의 재편을 다룹니다."),
+            ("exchange", exchanges, "거래소별",
+             "거래소별 테더(USDT) 구매 방법",
+             "거래소별 테더 구매 방법 — 업비트·빗썸·코인원·코빗·고팍스 | 테더뷰",
+             "업비트·빗썸·코인원·코빗·고팍스에서 원화로 테더를 구매하는 순서와 출금 전 확인사항을 거래소별로 정리했습니다.")):
         cards = "\n".join(
             card_html(a["url"], eyebrow, a["title_short"], a["description"]) for a in items) \
             or ('      <div class="card"><p style="margin:0;color:var(--ink-2);">'
                 "콘텐츠 준비 중입니다.</p></div>")
         idx_tokens = dict(dt)
         idx_tokens.update({"INDEX_EYEBROW": eyebrow, "INDEX_TITLE": title,
-                           "INDEX_DESC": desc, "CARDS": cards})
+                           "INDEX_DESC": desc,
+                           "CARDS": (exchange_tabs() + '\n<div class="exchange-index-cards">' + cards + '</div>'
+                                     if section == "exchange" else cards)})
         render_page(f"{section}/index.html", f"/{section}/", page_title, desc,
                     render(TPL["index-listing-body"], idx_tokens), nav=section.upper())
         add_map(f"/{section}/")
@@ -930,7 +1044,7 @@ def main():
           '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
           + "\n".join(urls) + "\n</urlset>\n")
 
-    print(f"빌드 완료: 페이지 {len(SITEMAP)}개 + 404 (가이드 {len(guides)} · 인사이트 {len(insights)} · 히스토리 {len(days)})")
+    print(f"빌드 완료: 페이지 {len(SITEMAP)}개 + 404 (가이드 {len(guides)} · 인사이트 {len(insights)} · 거래소 {len(exchanges)} · 히스토리 {len(days)})")
 
 
 if __name__ == "__main__":

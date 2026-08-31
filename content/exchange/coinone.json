@@ -1,0 +1,29 @@
+{
+  "order": 3,
+  "layout": "long-form",
+  "nav": "EXCHANGE",
+  "title": "코인원 테더(USDT) 구매 방법 — 카카오뱅크 입금부터 출금까지",
+  "title_short": "코인원에서 테더 구매하기",
+  "h1": "코인원 테더(USDT) 구매 방법",
+  "description": "카카오뱅크 계좌 연결, 원화 입금, USDT 매수와 TRC-20 출금 점검까지 코인원 테더 구매 순서를 설명합니다.",
+  "eyebrow": "COINONE · USDT BUYING GUIDE",
+  "hero_lead": "카카오뱅크에서 코인원으로 원화를 입금하고 테더를 구매하는 방법과, 외부 전송 전 확인할 항목을 단계별로 정리했습니다.",
+  "date_published": "2026-08-31",
+  "date_modified": "2026-08-31",
+  "draft_noindex": true,
+  "hero_image": "/assets/images/usdt-buying-hero-tether.png",
+  "core_title": "코인원에서 구매 전 네 가지를 확인하세요",
+  "core_checks": ["본인 명의 카카오뱅크 계좌와 고객확인", "원화마켓의 USDT 거래 지원 확인", "현재 가격·호가·수수료 비교", "USDT 입출금은 표시된 지원 네트워크로만 진행"],
+  "faq": [
+    {"q": "코인원은 어떤 은행계좌를 연결하나요?", "a": "원문 기준으로 본인 명의 카카오뱅크 계좌를 연결합니다. 제휴은행과 인증 절차는 변경될 수 있으므로 앱의 최신 원화 입출금 안내를 확인하세요."},
+    {"q": "코인원에서 USDT 출금 네트워크는 무엇인가요?", "a": "2026년 8월 26일 코인원 공식 지원 목록에는 USDT가 TRC-20으로 안내되어 있습니다. 실제 출금 시점에는 입출금 화면에 표시된 네트워크를 다시 확인하세요."},
+    {"q": "다른 네트워크 주소로 보내면 어떻게 되나요?", "a": "지원하지 않는 네트워크나 잘못된 주소로 전송하면 반영되지 않거나 복구가 어려울 수 있습니다. 처음에는 소액 시험 전송이 안전합니다."}
+  ],
+  "sources": [
+    {"title": "코인원 지원 가상자산 및 네트워크 유형", "url": "https://support.coinone.co.kr/support/solutions/articles/31000163237"},
+    {"title": "코인원 가상자산 입금 방법", "url": "https://support.coinone.co.kr/support/solutions/articles/31000177563"},
+    {"title": "코인원 미신고 거래소 입출금 제한 안내", "url": "https://support.coinone.co.kr/support/solutions/articles/31000169481"}
+  ],
+  "related": ["/exchange/upbit/", "/exchange/bithumb/", "/exchange/korbit/", "/guide/how-to-buy-usdt/"],
+  "cta": {"title": "구매 전 현재 USDT 가격을 확인하세요", "desc": "원·달러 환율과 국내 거래소 테더 가격을 한 화면에서 비교할 수 있습니다.", "url": "/price/usdt/", "label": "USDT 통합 시세 보기"}
+}

@@ -3,3 +3,8 @@ __pycache__/
 .DS_Store
 Thumbs.db
 node_modules/
+
+# 로컬 시안 보관용 미사용 미디어
+site/assets/video/chart-main.mp4
+site/assets/images/tether-coin-overlay.png
+site/assets/images/usdt-buying-hero.png

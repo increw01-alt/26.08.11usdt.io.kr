@@ -1,0 +1,29 @@
+{
+  "order": 2,
+  "layout": "long-form",
+  "nav": "EXCHANGE",
+  "title": "빗썸 테더(USDT) 구매 방법 — 원화 입금부터 출금까지",
+  "title_short": "빗썸에서 테더 구매하기",
+  "h1": "빗썸 테더(USDT) 구매 방법",
+  "description": "KB국민은행 계좌 연결, 원화 입금, USDT/KRW 매수와 입출금 주소 확인까지 빗썸 테더 구매 과정을 설명합니다.",
+  "eyebrow": "BITHUMB · USDT BUYING GUIDE",
+  "hero_lead": "KB국민은행 계좌를 연결한 뒤 빗썸에서 원화로 테더를 구매하고, 필요한 경우 외부 지갑으로 보내는 순서를 정리했습니다.",
+  "date_published": "2026-08-31",
+  "date_modified": "2026-08-31",
+  "draft_noindex": true,
+  "hero_image": "/assets/images/usdt-buying-hero-tether.png",
+  "core_title": "빗썸에서 구매 전 네 가지를 확인하세요",
+  "core_checks": ["본인 명의 KB국민은행 계좌와 고객확인", "USDT/KRW 거래화면 확인", "총 주문금액과 체결내역 점검", "출금주소·네트워크·수취인 정보 재확인"],
+  "faq": [
+    {"q": "빗썸에서 원화로 USDT를 직접 살 수 있나요?", "a": "거래 화면에서 USDT/KRW 시장이 제공되는지 확인한 뒤 원화로 매수할 수 있습니다. 거래 지원 상태는 실제 앱 화면을 최종 기준으로 확인하세요."},
+    {"q": "개인지갑으로 출금할 때 주소록 등록이 필요한가요?", "a": "출금 대상과 최신 정책에 따라 주소 등록이나 소유자 확인이 필요할 수 있습니다. 빗썸 입출금 화면에서 대상 유형과 필요한 증빙을 확인하세요."},
+    {"q": "출금 신청 후 바로 전송되지 않는 이유는 무엇인가요?", "a": "보안 점검, 이상거래 탐지, 네트워크 혼잡과 블록 확인 때문에 시간이 더 걸릴 수 있습니다."}
+  ],
+  "sources": [
+    {"title": "빗썸 가상자산 거래 이용 안내", "url": "https://www.bithumb.com/customer_support/info_guide/crypto-transactions/3405"},
+    {"title": "빗썸 입출금 이용 안내", "url": "https://www.bithumb.com/customer_support/info_guide?seq=215"},
+    {"title": "빗썸 고객지원 이용안내", "url": "https://www.bithumb.com/customer_support/info_guide/info-guide"}
+  ],
+  "related": ["/exchange/upbit/", "/exchange/coinone/", "/guide/how-to-buy-usdt/", "/price/usdt-bithumb/"],
+  "cta": {"title": "빗썸 USDT 가격을 먼저 비교하세요", "desc": "빗썸 테더 시세와 달러 환율을 비교해 구매 전 가격 차이를 확인하세요.", "url": "/price/usdt-bithumb/", "label": "빗썸 USDT 시세 보기"}
+}
