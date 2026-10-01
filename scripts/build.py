@@ -555,7 +555,7 @@ def faq_html_and_ld(faq, long_form=False):
 
 def exchange_tabs(active_slug=""):
     exchanges = (("upbit", "업비트"), ("bithumb", "빗썸"),
-                 ("coinone", "코인원"), ("korbit", "코빗"), ("gopax", "고팍스"))
+                 ("coinone", "코인원"), ("korbit", "디지털엑스"), ("gopax", "고팍스"))
     links = []
     for slug, name in exchanges:
         current = ' aria-current="page"' if slug == active_slug else ""
@@ -1016,8 +1016,8 @@ def main():
              "컴퓨트달러, AI 에이전트 결제, 스테이블코인과 미국 국채 — 오늘의 시세 너머에서 벌어지는 달러 패권의 재편을 다룹니다."),
             ("exchange", exchanges, "거래소별",
              "거래소별 테더(USDT) 구매 방법",
-             "거래소별 테더 구매 방법 — 업비트·빗썸·코인원·코빗·고팍스 | 테더뷰",
-             "업비트·빗썸·코인원·코빗·고팍스에서 원화로 테더를 구매하는 순서와 출금 전 확인사항을 거래소별로 정리했습니다.")):
+             "거래소별 테더 구매 방법 — 업비트·빗썸·코인원·디지털엑스·고팍스 | 테더뷰",
+             "업비트·빗썸·코인원·디지털엑스(구 코빗)·고팍스에서 원화로 테더를 구매하는 순서와 출금 전 확인사항을 거래소별로 정리했습니다.")):
         cards = "\n".join(
             card_html(a["url"], eyebrow, a["title_short"], a["description"]) for a in items) \
             or ('      <div class="card"><p style="margin:0;color:var(--ink-2);">'
