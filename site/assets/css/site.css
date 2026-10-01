@@ -1689,3 +1689,21 @@ body:has(.home-video-hero) .site-subnav a:hover,
 }
 /* 관련 글 영역도 배경이 밝게 고정 — 카드는 테마 색을 유지하므로 제목만 고정 */
 .long-article-related > h2 { color: #17222e; }
+
+/* ── 실시간 시세 (live.js) ─────────────────────────── */
+.updated-badge.live .dot { animation: live-pulse 1.6s ease-in-out infinite; }
+@keyframes live-pulse { 0%, 100% { opacity: 1; } 50% { opacity: .35; } }
+[data-live-flash] { border-radius: 4px; }
+.live-up { animation: live-flash-up .7s ease-out; }
+.live-down { animation: live-flash-down .7s ease-out; }
+@keyframes live-flash-up {
+  from { background: color-mix(in srgb, var(--up) 26%, transparent); }
+  to { background: transparent; }
+}
+@keyframes live-flash-down {
+  from { background: color-mix(in srgb, var(--down) 26%, transparent); }
+  to { background: transparent; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .updated-badge.live .dot, .live-up, .live-down { animation: none; }
+}

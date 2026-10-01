@@ -54,7 +54,12 @@ python -m http.server 8788 --directory site   # 로컬 프리뷰
 1. **로컬 빌드·커밋 전에 반드시 `git pull --rebase`** — 크론 봇이 10분마다 site/를 커밋하므로 순서를 지키지 않으면 충돌
 2. site/ 생성 파일에서 충돌 시: 로컬 빌드본(`--theirs`)으로 해소 후 `build.py` 재실행으로 재생성 확인. **커밋 전 `grep -r "<<<<<<<" site`로 충돌 마커 검사**
 3. 새 글 추가는 [docs/article-spec.md](article-spec.md) 계약 필수 (프래그먼트+메타 JSON → build.py가 조립)
-4. 컴플라이언스(전략 v2 §8): 투자 권유·재정거래 따라하기·거래소 레퍼럴·"실시간" 표기·상품권 언급 금지
+4. 컴플라이언스(전략 v2 §8): 투자 권유·재정거래 따라하기·거래소 레퍼럴·상품권 언급 금지
+5. "실시간" 표기는 **시세에만** 쓴다 (2026-10-01~). 홈과 /price/ 4개 페이지는 `site/assets/js/live.js`가
+   방문자 브라우저에서 거래소 공개 API(업비트 웹소켓·바이낸스 웹소켓·빗썸 REST)로 시세를 직접 받아 갱신한다.
+   달러 환율(하루 단위 고시)·뉴스·/price/compare/·히스토리는 실시간이 아니므로 "실시간"이라 쓰지 않는다.
+   크론(GitHub Actions)은 검색엔진용 정적 숫자와 아카이브를 만드는 역할이며, 실제 실행 간격은
+   설정(10분)과 달리 수 시간 단위로 밀린다.
 
 ## 5. 남은 일 (우선순위순)
 
@@ -79,6 +84,7 @@ scripts/build.py      전 페이지+sitemap 렌더러 (템플릿 {{토큰}} 치�
 scripts/backfill.py   과거 일봉 백필 (1회성, 재실행 안전)
 scripts/fetch_logos.py 코인 로고 자동 보충
 scripts/check_links.py 내부 링크 검사 (빌드 후 실행 습관화)
+site/assets/js/live.js 실시간 시세 (템플릿의 data-live="키" 자리를 갱신 — 키 목록은 파일 안 compute())
 templates/            셸+페이지 본문 템플릿
 content/{guide,insight}/  아티클 (slug.json + slug.html 프래그먼트)
 site/                 배포 루트 (생성물 — 직접 수정 금지, 템플릿·스크립트를 수정)

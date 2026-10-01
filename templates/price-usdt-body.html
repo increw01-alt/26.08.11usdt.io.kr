@@ -3,7 +3,7 @@
     <span class="eyebrow">USDT 통합 시세</span>
     <h1>USDT 시세 — 테더 원화 가격과 김프</h1>
     <p class="sub">업비트·빗썸의 테더(USDT) 가격을 달러 환율과 나란히 비교합니다. 1 USDT의 적정가는 곧 1달러의 원화 가치입니다.</p>
-    <span class="updated-badge{{STALE_CLASS}}"><span class="dot"></span>10분마다 갱신 · {{UPDATED_KST}} 기준{{STALE_NOTE}}</span>
+    <span class="updated-badge{{STALE_CLASS}}" data-live-badge><span class="dot"></span><span data-live-status>{{UPDATED_KST}} 기준{{STALE_NOTE}}</span></span>
   </div>
 </section>
 
@@ -12,35 +12,35 @@
     <div class="stat-grid">
       <div class="stat">
         <div class="label">업비트 USDT</div>
-        <div class="value num">{{USDT_UPBIT_PRICE}}원</div>
-        <div class="delta num {{USDT_UPBIT_CHANGE_CLASS}}">{{USDT_UPBIT_CHANGE_TEXT}}</div>
-        <div class="note">김프 <span class="badge-{{USDT_KIMP_UPBIT_BADGE}} num">{{USDT_KIMP_UPBIT}}</span></div>
+        <div class="value num"><span data-live="usdt-upbit-price" data-live-flash>{{USDT_UPBIT_PRICE}}</span>원</div>
+        <div class="delta num {{USDT_UPBIT_CHANGE_CLASS}}" data-live="usdt-upbit-change" data-live-cls>{{USDT_UPBIT_CHANGE_TEXT}}</div>
+        <div class="note">김프 <span class="badge-{{USDT_KIMP_UPBIT_BADGE}} num" data-live="usdt-upbit-kimp" data-live-cls="badge">{{USDT_KIMP_UPBIT}}</span></div>
       </div>
       <div class="stat">
         <div class="label">빗썸 USDT</div>
-        <div class="value num">{{USDT_BITHUMB_PRICE}}원</div>
-        <div class="delta num {{USDT_BITHUMB_CHANGE_CLASS}}">{{USDT_BITHUMB_CHANGE_TEXT}}</div>
-        <div class="note">김프 <span class="badge-{{USDT_KIMP_BITHUMB_BADGE}} num">{{USDT_KIMP_BITHUMB}}</span></div>
+        <div class="value num"><span data-live="usdt-bithumb-price" data-live-flash>{{USDT_BITHUMB_PRICE}}</span>원</div>
+        <div class="delta num {{USDT_BITHUMB_CHANGE_CLASS}}" data-live="usdt-bithumb-change" data-live-cls>{{USDT_BITHUMB_CHANGE_TEXT}}</div>
+        <div class="note">김프 <span class="badge-{{USDT_KIMP_BITHUMB_BADGE}} num" data-live="usdt-bithumb-kimp" data-live-cls="badge">{{USDT_KIMP_BITHUMB}}</span></div>
       </div>
       <div class="stat">
         <div class="label">1 USDT 적정가 (달러 환율)</div>
-        <div class="value num">{{FX_USDKRW}}원</div>
+        <div class="value num"><span data-live="fx">{{FX_USDKRW}}</span>원</div>
         <div class="note">{{FX_SOURCE}} · {{FX_DATE}}</div>
       </div>
       <div class="stat">
         <div class="label">USDT 시장 정보</div>
         <div class="value num" style="font-size:19px;">52주 {{USDT_W52_HIGH}} / {{USDT_W52_LOW}}원</div>
-        <div class="note">시가총액 {{USDT_MCAP}} ({{USDT_MCAP_SOURCE}}) · 국내 24h 거래대금 {{USDT_VOL_TOTAL}}</div>
+        <div class="note">시가총액 {{USDT_MCAP}} ({{USDT_MCAP_SOURCE}}) · 국내 24h 거래대금 <span data-live="usdt-vol-total">{{USDT_VOL_TOTAL}}</span></div>
       </div>
     </div>
-    <p class="section-desc">{{TODAY_SUMMARY_SENTENCE}}</p>
+    <p class="section-desc" data-live="summary-today">{{TODAY_SUMMARY_SENTENCE}}</p>
   </div>
 </section>
 
 <section class="section">
   <div class="container">
     <div class="card chart-card">
-      <div class="chart-head"><h3>업비트 USDT vs 달러 환율</h3><span class="range">최근 7일 · 10분 단위</span></div>
+      <div class="chart-head"><h3>업비트 USDT vs 달러 환율</h3><span class="range">최근 7일</span></div>
       <div class="chart-legend">
         <span class="key"><span class="swatch" style="background:var(--s1)"></span>업비트 USDT</span>
         <span class="key"><span class="swatch" style="background:var(--s2)"></span>달러 환율</span>
@@ -57,12 +57,12 @@
       <table>
         <thead><tr><th>항목</th><th class="r">업비트</th><th class="r">빗썸</th></tr></thead>
         <tbody>
-          <tr><td>현재가</td><td class="r num">{{USDT_UPBIT_PRICE}}원</td><td class="r num">{{USDT_BITHUMB_PRICE}}원</td></tr>
-          <tr><td>등락률</td><td class="r num {{USDT_UPBIT_CHANGE_CLASS}}">{{USDT_UPBIT_CHANGE_TEXT}}</td><td class="r num {{USDT_BITHUMB_CHANGE_CLASS}}">{{USDT_BITHUMB_CHANGE_TEXT}}</td></tr>
-          <tr><td>고가</td><td class="r num">{{USDT_UPBIT_HIGH}}원</td><td class="r num">{{USDT_BITHUMB_HIGH}}원</td></tr>
-          <tr><td>저가</td><td class="r num">{{USDT_UPBIT_LOW}}원</td><td class="r num">{{USDT_BITHUMB_LOW}}원</td></tr>
-          <tr><td>24h 거래대금</td><td class="r num">{{USDT_UPBIT_VOL}}</td><td class="r num">{{USDT_BITHUMB_VOL}}</td></tr>
-          <tr><td>환율 대비 김프</td><td class="r num {{USDT_KIMP_UPBIT_CLASS}}">{{USDT_KIMP_UPBIT}}</td><td class="r num {{USDT_KIMP_BITHUMB_CLASS}}">{{USDT_KIMP_BITHUMB}}</td></tr>
+          <tr><td>현재가</td><td class="r num"><span data-live="usdt-upbit-price" data-live-flash>{{USDT_UPBIT_PRICE}}</span>원</td><td class="r num"><span data-live="usdt-bithumb-price" data-live-flash>{{USDT_BITHUMB_PRICE}}</span>원</td></tr>
+          <tr><td>등락률</td><td class="r num {{USDT_UPBIT_CHANGE_CLASS}}" data-live="usdt-upbit-change" data-live-cls>{{USDT_UPBIT_CHANGE_TEXT}}</td><td class="r num {{USDT_BITHUMB_CHANGE_CLASS}}" data-live="usdt-bithumb-change" data-live-cls>{{USDT_BITHUMB_CHANGE_TEXT}}</td></tr>
+          <tr><td>고가</td><td class="r num"><span data-live="usdt-upbit-high">{{USDT_UPBIT_HIGH}}</span>원</td><td class="r num"><span data-live="usdt-bithumb-high">{{USDT_BITHUMB_HIGH}}</span>원</td></tr>
+          <tr><td>저가</td><td class="r num"><span data-live="usdt-upbit-low">{{USDT_UPBIT_LOW}}</span>원</td><td class="r num"><span data-live="usdt-bithumb-low">{{USDT_BITHUMB_LOW}}</span>원</td></tr>
+          <tr><td>24h 거래대금</td><td class="r num"><span data-live="usdt-upbit-vol">{{USDT_UPBIT_VOL}}</span></td><td class="r num"><span data-live="usdt-bithumb-vol">{{USDT_BITHUMB_VOL}}</span></td></tr>
+          <tr><td>환율 대비 김프</td><td class="r num {{USDT_KIMP_UPBIT_CLASS}}" data-live="usdt-upbit-kimp" data-live-cls>{{USDT_KIMP_UPBIT}}</td><td class="r num {{USDT_KIMP_BITHUMB_CLASS}}" data-live="usdt-bithumb-kimp" data-live-cls>{{USDT_KIMP_BITHUMB}}</td></tr>
         </tbody>
       </table>
     </div>
@@ -86,7 +86,7 @@
     <h2>자주 묻는 질문</h2>
     <details>
       <summary>USDT 시세는 어디 기준인가요?</summary>
-      <p>업비트·빗썸의 원화마켓 공개 API 체결가 기준이며 10분마다 갱신됩니다. 페이지 상단에 갱신 시각을 항상 표시합니다.</p>
+      <p>업비트·빗썸의 원화마켓 공개 API 체결가 기준입니다. 페이지를 열어 두면 브라우저가 거래소에서 현재 체결가를 직접 받아 실시간으로 표시하며, 상단에 마지막 갱신 시각을 보여줍니다. 김프 계산에 쓰는 달러 환율은 실시간이 아니라 당일 고시 기준입니다.</p>
     </details>
     <details>
       <summary>테더 김프가 플러스면 무슨 뜻인가요?</summary>
@@ -116,3 +116,4 @@
 </section>
 
 <script type="application/json" id="series-data">{{SERIES_JSON}}</script>
+<script type="application/json" id="live-config">{{LIVE_CONFIG}}</script>

@@ -3,7 +3,7 @@
     <span class="eyebrow">{{EX_NAME}} USDT</span>
     <h1>{{EX_NAME}} 테더(USDT) 시세</h1>
     <p class="sub">{{EX_NAME}} 원화마켓의 USDT 가격을 달러 환율과 비교해 김프까지 한 번에 보여드립니다.</p>
-    <span class="updated-badge{{STALE_CLASS}}"><span class="dot"></span>10분마다 갱신 · {{UPDATED_KST}} 기준{{STALE_NOTE}}</span>
+    <span class="updated-badge{{STALE_CLASS}}" data-live-badge><span class="dot"></span><span data-live-status>{{UPDATED_KST}} 기준{{STALE_NOTE}}</span></span>
   </div>
 </section>
 
@@ -12,28 +12,28 @@
     <div class="stat-grid">
       <div class="stat">
         <div class="label">{{EX_NAME}} USDT 현재가</div>
-        <div class="value num">{{EX_PRICE}}원</div>
-        <div class="delta num {{EX_CHANGE_CLASS}}">{{EX_CHANGE_TEXT}}</div>
+        <div class="value num"><span data-live="usdt-{{EX_KEY}}-price" data-live-flash>{{EX_PRICE}}</span>원</div>
+        <div class="delta num {{EX_CHANGE_CLASS}}" data-live="usdt-{{EX_KEY}}-change" data-live-cls>{{EX_CHANGE_TEXT}}</div>
       </div>
       <div class="stat">
         <div class="label">환율 대비 김프</div>
-        <div class="value num {{EX_KIMP_CLASS}}">{{EX_KIMP}}</div>
-        <div class="note">달러 환율 {{FX_USDKRW}}원 기준</div>
+        <div class="value num {{EX_KIMP_CLASS}}" data-live="usdt-{{EX_KEY}}-kimp" data-live-cls>{{EX_KIMP}}</div>
+        <div class="note">달러 환율 <span data-live="fx">{{FX_USDKRW}}</span>원 기준</div>
       </div>
       <div class="stat">
         <div class="label">고가 / 저가</div>
-        <div class="value num" style="font-size:21px;">{{EX_HIGH}}원 / {{EX_LOW}}원</div>
-        <div class="note">24h 거래대금 {{EX_VOL}}</div>
+        <div class="value num" style="font-size:21px;"><span data-live="usdt-{{EX_KEY}}-high">{{EX_HIGH}}</span>원 / <span data-live="usdt-{{EX_KEY}}-low">{{EX_LOW}}</span>원</div>
+        <div class="note">24h 거래대금 <span data-live="usdt-{{EX_KEY}}-vol">{{EX_VOL}}</span></div>
       </div>
     </div>
-    <p class="section-desc">{{EX_SUMMARY_SENTENCE}}</p>
+    <p class="section-desc" data-live="summary-{{EX_KEY}}">{{EX_SUMMARY_SENTENCE}}</p>
   </div>
 </section>
 
 <section class="section">
   <div class="container">
     <div class="card chart-card">
-      <div class="chart-head"><h3>{{EX_NAME}} USDT vs 달러 환율</h3><span class="range">최근 7일 · 10분 단위</span></div>
+      <div class="chart-head"><h3>{{EX_NAME}} USDT vs 달러 환율</h3><span class="range">최근 7일</span></div>
       <div class="chart-legend">
         <span class="key"><span class="swatch" style="background:var(--s1)"></span>{{EX_NAME}} USDT</span>
         <span class="key"><span class="swatch" style="background:var(--s2)"></span>달러 환율</span>
@@ -76,3 +76,4 @@
 </section>
 
 <script type="application/json" id="series-data">{{SERIES_JSON}}</script>
+<script type="application/json" id="live-config">{{LIVE_CONFIG}}</script>

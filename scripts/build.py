@@ -159,6 +159,12 @@ def coin_tokens(prefix, price, change, high, low, vol, kimp, change_suffix):
     return t
 
 
+def live_config(sources, coins=()):
+    """실시간 시세 스크립트(live.js) 설정 — 페이지가 쓰는 소스·코인과 빌드 시점 환율."""
+    return json.dumps({"fx": g(latest, "fx", "usdkrw"), "sources": list(sources),
+                       "coins": list(coins)}, separators=(",", ":"))
+
+
 def gauge_svg(k):
     """서버 렌더링 반원 게이지 (-3% ~ +5%, 0% 눈금 표시)."""
     kv = 0.0 if k is None else k
@@ -273,9 +279,12 @@ def build_data_tokens():
                  else f"{logo}{name} ({sym})")
         coin_rows.append(
             f"          <tr><td>{label}</td>"
-            f'<td class="r num">{t[sym + "_UPBIT_PRICE"]}원</td>'
-            f'<td class="r num">${t[sym + "_BINANCE_USD"]}</td>'
-            f'<td class="r num {t[sym + "_KIMP_CLASS"]}">{t[sym + "_KIMP"]}</td></tr>')
+            f'<td class="r num"><span data-live="{sym.lower()}-upbit-price" data-live-flash>'
+            f'{t[sym + "_UPBIT_PRICE"]}</span>원</td>'
+            f'<td class="r num">$<span data-live="{sym.lower()}-binance-usd" data-live-flash>'
+            f'{t[sym + "_BINANCE_USD"]}</span></td>'
+            f'<td class="r num {t[sym + "_KIMP_CLASS"]}" data-live="{sym.lower()}-kimp" data-live-cls>'
+            f'{t[sym + "_KIMP"]}</td></tr>')
     t["COIN_KIMP_ROWS"] = "\n".join(coin_rows)
 
     # 달러 환산가
@@ -411,6 +420,7 @@ def render_page(out_rel, canonical_path, title, description, body,
 
 
 CHART_JS = '<script src="/assets/js/chart-mini.js" defer></script>'
+LIVE_JS = '<script src="/assets/js/live.js?v=20261001" defer></script>'
 CALC_JS = '<script src="/assets/js/calc.js" defer></script>'
 CALC_TOOLS_JS = '<script src="/assets/js/calc-tools.js" defer></script>'
 
@@ -432,7 +442,7 @@ def add_map(path, lastmod=None):
 # ── 정적 페이지 카드 레지스트리 (관련 글 카드용) ────────────────────
 
 STATIC_PAGES = {
-    "/": ("도구", "USDT 김프 현황판", "업비트·빗썸 테더 시세와 김치프리미엄을 10분 단위로 확인합니다."),
+    "/": ("도구", "USDT 김프 현황판", "업비트·빗썸 테더 시세와 김치프리미엄을 실시간 시세로 확인합니다."),
     "/price/usdt/": ("시세", "USDT 통합 시세", "업비트·빗썸 테더 가격과 달러 환율을 한 화면에서 비교합니다."),
     "/price/usdt-upbit/": ("시세", "업비트 USDT 시세", "업비트 원화마켓의 테더 가격과 김프를 확인합니다."),
     "/price/usdt-bithumb/": ("시세", "빗썸 USDT 시세", "빗썸 원화마켓의 테더 가격과 김프를 확인합니다."),
@@ -580,7 +590,7 @@ def build_article(a, guide_map, insight_map, exchange_map=None):
 
     cta = a.get("cta") or {
         "title": "지금 USDT 김프 확인하기",
-        "desc": "업비트·빗썸 테더 시세와 김프를 10분 단위로 갱신합니다.",
+        "desc": "업비트·빗썸 테더 시세와 김프를 실시간 시세로 확인합니다.",
         "url": "/", "label": "김프 현황판 보기",
     }
 
@@ -693,10 +703,10 @@ def main():
     dt["HOME_INSIGHT_CARDS"] = home_insight_cards or card_html("/insight/", *STATIC_PAGES["/insight/"])
 
     kimp_now = g(latest, "derived", "kimp_usdt_upbit")
-    home_desc = ("업비트·빗썸 테더(USDT) 시세와 달러 환율 대비 김치프리미엄·역프를 10분 단위로 확인하세요."
+    home_desc = ("업비트·빗썸 테더(USDT) 시세와 달러 환율 대비 김치프리미엄·역프를 실시간 시세로 확인하세요."
                  if kimp_now is None else
                  f"지금 업비트 USDT {dt['USDT_UPBIT_PRICE']}원, 김프 {fmt_pct(kimp_now)}. "
-                 "업비트·빗썸 테더 시세와 김치프리미엄·역프를 10분 단위로 확인하세요.")
+                 "업비트·빗썸 테더 시세와 김치프리미엄·역프를 실시간 시세로 확인하세요.")
     ld_home = jsonld({
         "@context": "https://schema.org", "@type": "WebSite",
         "name": "테더뷰",
@@ -706,9 +716,11 @@ def main():
         "inLanguage": "ko",
     })
     render_page("index.html", "/",
-                "USDT 시세 · 테더 김치프리미엄 확인 — 10분마다 갱신 | 테더뷰",
-                home_desc, render(TPL["home-body"], dt),
-                jsonld_html=ld_home, nav=None, extra_scripts=CHART_JS)
+                "USDT 시세 · 테더 김치프리미엄 확인 — 실시간 시세 | 테더뷰",
+                home_desc,
+                render(TPL["home-body"], dict(dt, LIVE_CONFIG=live_config(
+                    ("upbit", "bithumb", "binance"), COIN_NAMES))),
+                jsonld_html=ld_home, nav=None, extra_scripts=CHART_JS + LIVE_JS)
     add_map("/")
 
     # /price/usdt/
@@ -716,8 +728,8 @@ def main():
                 "USDT 시세 — 테더 원화 가격·김프 통합 비교 | 테더뷰",
                 f"테더(USDT) 원화 시세 통합 비교. 업비트 {dt['USDT_UPBIT_PRICE']}원 · 빗썸 "
                 f"{dt['USDT_BITHUMB_PRICE']}원 · 달러 환율 {dt['FX_USDKRW']}원. 김프까지 한 화면에서.",
-                render(TPL["price-usdt-body"], dt),
-                nav="PRICE", extra_scripts=CHART_JS)
+                render(TPL["price-usdt-body"], dict(dt, LIVE_CONFIG=live_config(("upbit", "bithumb")))),
+                nav="PRICE", extra_scripts=CHART_JS + LIVE_JS)
     add_map("/price/usdt/")
 
     # /price/usdt-upbit/, /price/usdt-bithumb/
@@ -744,6 +756,8 @@ def main():
         ex_tokens = dict(dt)
         ex_tokens.update({
             "EX_NAME": ex_name,
+            "EX_KEY": ex_key,
+            "LIVE_CONFIG": live_config((ex_key,)),
             "EX_PRICE": fmt_price_krw(g(latest, src, "USDT", "price")),
             "EX_CHANGE_CLASS": cls_of(g(latest, src, "USDT", "change_rate")),
             "EX_CHANGE_TEXT": (fmt_pct(g(latest, src, "USDT", "change_rate")) + " " + suffix
@@ -766,18 +780,19 @@ def main():
         render_page(f"price/usdt-{ex_key}/index.html", f"/price/usdt-{ex_key}/",
                     f"{ex_name} 테더(USDT) 시세 · 김프 | 테더뷰",
                     f"{ex_name} 원화마켓 테더(USDT) 현재가 {ex_tokens['EX_PRICE']}원, "
-                    f"달러 환율 대비 김프 {ex_tokens['EX_KIMP']}. 10분마다 갱신됩니다.",
+                    f"달러 환율 대비 김프 {ex_tokens['EX_KIMP']}. 실시간 시세로 확인하세요.",
                     render(TPL["price-exchange-body"], ex_tokens),
-                    nav="PRICE", extra_scripts=CHART_JS)
+                    nav="PRICE", extra_scripts=CHART_JS + LIVE_JS)
         add_map(f"/price/usdt-{ex_key}/")
 
     # /price/btc/
     render_page("price/btc/index.html", "/price/btc/",
                 "비트코인 김치프리미엄 — 업비트 vs 바이낸스 | 테더뷰",
                 f"비트코인 김프 {dt['BTC_KIMP']}. 업비트 원화가격과 바이낸스 달러가격(환율 환산)의 "
-                "차이를 10분 단위로 추적합니다. USDT 김프와의 비교까지.",
-                render(TPL["price-btc-body"], dt),
-                nav="PRICE", extra_scripts=CHART_JS)
+                "차이를 실시간 시세로 확인합니다. USDT 김프와의 비교까지.",
+                render(TPL["price-btc-body"], dict(dt, LIVE_CONFIG=live_config(
+                    ("upbit", "binance"), ("BTC", "ETH", "XRP")))),
+                nav="PRICE", extra_scripts=CHART_JS + LIVE_JS)
     add_map("/price/btc/")
 
     # /calc/kimp/

@@ -6,7 +6,7 @@
       <div class="home-video-copy">
         <span class="eyebrow">테더(USDT) 특화 시세 · 김프 정보</span>
         <h1>USDT 시세와 김치프리미엄,<br>한 화면에서 확인합니다</h1>
-        <span class="updated-badge{{STALE_CLASS}}"><span class="dot"></span>10분마다 갱신 · {{UPDATED_KST}} 기준{{STALE_NOTE}}</span>
+        <span class="updated-badge{{STALE_CLASS}}" data-live-badge><span class="dot"></span><span data-live-status>{{UPDATED_KST}} 기준{{STALE_NOTE}}</span></span>
       </div>
     </div>
   </div>
@@ -17,11 +17,11 @@
     <div class="dash-main">
 
       <div class="card gauge-card">
-        <div class="gauge-wrap" aria-hidden="true">{{GAUGE_SVG}}</div>
+        <div class="gauge-wrap" aria-hidden="true" data-live="gauge-svg">{{GAUGE_SVG}}</div>
         <div class="gauge-info">
           <div class="label">오늘의 김치프리미엄 · 업비트 USDT 기준</div>
-          <div class="value num {{USDT_KIMP_UPBIT_CLASS}}">{{USDT_KIMP_UPBIT}}</div>
-          <div class="desc">{{GAUGE_DESC}}</div>
+          <div class="value num {{USDT_KIMP_UPBIT_CLASS}}" data-live="usdt-upbit-kimp" data-live-cls>{{USDT_KIMP_UPBIT}}</div>
+          <div class="desc" data-live="gauge-desc">{{GAUGE_DESC}}</div>
         </div>
       </div>
 
@@ -33,23 +33,23 @@
             <tbody>
               <tr>
                 <td><a href="/price/usdt-upbit/">업비트</a></td>
-                <td class="r num">{{USDT_UPBIT_PRICE}}원</td>
-                <td class="r num">${{USDT_UPBIT_USD}}</td>
-                <td class="r num {{USDT_UPBIT_CHANGE_CLASS}}">{{USDT_UPBIT_CHANGE_TEXT}}</td>
-                <td class="r num {{USDT_KIMP_UPBIT_CLASS}}">{{USDT_KIMP_UPBIT}}</td>
+                <td class="r num"><span data-live="usdt-upbit-price" data-live-flash>{{USDT_UPBIT_PRICE}}</span>원</td>
+                <td class="r num">$<span data-live="usdt-upbit-usd">{{USDT_UPBIT_USD}}</span></td>
+                <td class="r num {{USDT_UPBIT_CHANGE_CLASS}}" data-live="usdt-upbit-change" data-live-cls>{{USDT_UPBIT_CHANGE_TEXT}}</td>
+                <td class="r num {{USDT_KIMP_UPBIT_CLASS}}" data-live="usdt-upbit-kimp" data-live-cls>{{USDT_KIMP_UPBIT}}</td>
                 <td class="r"><span class="spark" data-chart="series-data" data-spark="usdt_upbit" data-color="s1"></span></td>
               </tr>
               <tr>
                 <td><a href="/price/usdt-bithumb/">빗썸</a></td>
-                <td class="r num">{{USDT_BITHUMB_PRICE}}원</td>
-                <td class="r num">${{USDT_BITHUMB_USD}}</td>
-                <td class="r num {{USDT_BITHUMB_CHANGE_CLASS}}">{{USDT_BITHUMB_CHANGE_TEXT}}</td>
-                <td class="r num {{USDT_KIMP_BITHUMB_CLASS}}">{{USDT_KIMP_BITHUMB}}</td>
+                <td class="r num"><span data-live="usdt-bithumb-price" data-live-flash>{{USDT_BITHUMB_PRICE}}</span>원</td>
+                <td class="r num">$<span data-live="usdt-bithumb-usd">{{USDT_BITHUMB_USD}}</span></td>
+                <td class="r num {{USDT_BITHUMB_CHANGE_CLASS}}" data-live="usdt-bithumb-change" data-live-cls>{{USDT_BITHUMB_CHANGE_TEXT}}</td>
+                <td class="r num {{USDT_KIMP_BITHUMB_CLASS}}" data-live="usdt-bithumb-kimp" data-live-cls>{{USDT_KIMP_BITHUMB}}</td>
                 <td class="r"><span class="spark" data-chart="series-data" data-spark="usdt_bithumb" data-color="s1"></span></td>
               </tr>
               <tr>
                 <td>달러 환율 <span style="color:var(--ink-3);font-size:12px;">(적정가)</span></td>
-                <td class="r num">{{FX_USDKRW}}원</td>
+                <td class="r num"><span data-live="fx">{{FX_USDKRW}}</span>원</td>
                 <td class="r num">$1.0000</td>
                 <td class="r num flat">—</td>
                 <td class="r num flat">기준</td>
@@ -58,11 +58,11 @@
             </tbody>
           </table>
         </div>
-        <p class="section-desc" style="margin:10px 0 0;">{{TODAY_SUMMARY_SENTENCE}}</p>
+        <p class="section-desc" style="margin:10px 0 0;" data-live="summary-today">{{TODAY_SUMMARY_SENTENCE}}</p>
       </div>
 
       <div class="card chart-card">
-        <div class="chart-head"><h3>USDT 김치프리미엄 추이</h3><span class="range">최근 7일 · 10분 단위</span></div>
+        <div class="chart-head"><h3>USDT 김치프리미엄 추이</h3><span class="range">최근 7일</span></div>
         <div class="chart-box" data-chart="series-data" data-series="kimp_usdt" data-labels="USDT 김프" data-colors="s1" data-unit="%" data-days="7" data-baseline="0"></div>
       </div>
 
@@ -71,7 +71,7 @@
 
       <div class="card">
         <div class="mini-stat"><span class="k">달러 환율 (USD/KRW)</span></div>
-        <div style="font-size:26px;font-weight:800;letter-spacing:-.01em;" class="num">{{FX_USDKRW}}원</div>
+        <div style="font-size:26px;font-weight:800;letter-spacing:-.01em;" class="num"><span data-live="fx">{{FX_USDKRW}}</span>원</div>
         <div style="margin:8px 0 2px;"><span class="spark" data-chart="series-data" data-spark="usdkrw" data-color="s2" style="width:100%;height:36px;display:block;"></span></div>
         <div class="mini-stat"><span class="s">{{FX_SOURCE}} · {{FX_DATE}}</span></div>
       </div>
@@ -81,7 +81,7 @@
         <div class="mini-stat"><span class="k">52주 최고</span><span class="v num pos">{{USDT_W52_HIGH}}원</span></div>
         <div class="mini-stat"><span class="k">52주 최저</span><span class="v num neg">{{USDT_W52_LOW}}원</span></div>
         <div class="mini-stat"><span class="k">시가총액</span><span class="v num">{{USDT_MCAP}}</span></div>
-        <div class="mini-stat"><span class="k">국내 24h 거래대금</span><span class="v num">{{USDT_VOL_TOTAL}}</span></div>
+        <div class="mini-stat"><span class="k">국내 24h 거래대금</span><span class="v num"><span data-live="usdt-vol-total">{{USDT_VOL_TOTAL}}</span></span></div>
         <div class="mini-stat"><span class="s">52주 기준: 업비트 · 시총: {{USDT_MCAP_SOURCE}}</span></div>
       </div>
 
@@ -115,7 +115,7 @@
   <div class="container">
     <div class="card-grid" style="grid-template-columns:repeat(auto-fit,minmax(320px,1fr));">
       <div class="card chart-card">
-        <div class="chart-head"><h3>업비트 USDT vs 달러 환율</h3><span class="range">최근 7일 · 10분 단위</span></div>
+        <div class="chart-head"><h3>업비트 USDT vs 달러 환율</h3><span class="range">최근 7일</span></div>
         <div class="chart-legend">
           <span class="key"><span class="swatch" style="background:var(--s1)"></span>업비트 USDT</span>
           <span class="key"><span class="swatch" style="background:var(--s2)"></span>달러 환율</span>
@@ -177,3 +177,4 @@
 
 <script type="application/json" id="series-data">{{SERIES_JSON}}</script>
 <script type="application/json" id="daily-data">{{DAILY_JSON}}</script>
+<script type="application/json" id="live-config">{{LIVE_CONFIG}}</script>
