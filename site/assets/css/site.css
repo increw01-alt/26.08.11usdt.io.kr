@@ -1671,3 +1671,21 @@ body:has(.home-video-hero) .site-subnav a:hover,
     transition: none;
   }
 }
+
+/* ── 장문 카드 글자 토큰 고정 ─────────────────────────
+   article-v1 카드는 테마와 무관하게 밝은 배경으로 고정되어 있다.
+   다크 테마의 밝은 --ink 가 그대로 상속되면 표 머리글·FAQ 질문·박스 제목이
+   밝은 배경 위 밝은 글자가 되므로, 카드 안에서는 라이트 테마 값을 쓴다. */
+.article-v1-section,
+.article-v1-live-strip,
+.article-v1-sources {
+  color: #17222e;
+  --ink: #17222e;
+  --ink-2: #4e5c6d;
+  --ink-3: #7b8899;
+  --border: #e2e7ee;
+  --border-strong: #cbd4e0;
+  --surface-2: #f0f3f7;
+}
+/* 관련 글 영역도 배경이 밝게 고정 — 카드는 테마 색을 유지하므로 제목만 고정 */
+.long-article-related > h2 { color: #17222e; }
