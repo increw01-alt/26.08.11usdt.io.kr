@@ -666,7 +666,9 @@ def build_article(a, guide_map, insight_map, exchange_map=None):
                      if a.get("draft_noindex") else ""),
         hero_image=a.get("hero_image", ""),
     )
-    add_map(a["url"], a.get("date_modified", a["date_published"]))
+    # noindex 초안은 sitemap 에서 제외 — 색인 금지 URL 을 제출하면 서치콘솔 오류
+    if not a.get("draft_noindex"):
+        add_map(a["url"], a.get("date_modified", a["date_published"]))
 
 
 # ── 빌드 실행 ─────────────────────────────────────────────────────
