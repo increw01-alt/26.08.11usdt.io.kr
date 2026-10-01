@@ -28,14 +28,16 @@ COINS = ["BTC", "ETH", "XRP", "SOL", "DOGE", "ADA", "TRX"]
 UPBIT_URL = ("https://api.upbit.com/v1/ticker?markets=KRW-USDT,"
              + ",".join("KRW-" + c for c in COINS))
 BITHUMB_URL = "https://api.bithumb.com/public/ticker/USDT_KRW"
-BINANCE_URL = ("https://api.binance.com/api/v3/ticker/price?symbols="
-               + urllib.parse.quote(json.dumps([c + "USDT" for c in COINS],
-                                               separators=(",", ":"))))
+# 바이낸스: api.binance.com 은 GitHub Actions 러너(미국 IP)에서 HTTP 451(지역 제한)로
+# 거부된다. 공개 시세 전용 엔드포인트를 먼저 쓰고, 실패하면 기본 엔드포인트로 넘어간다.
+BINANCE_BASES = ("https://data-api.binance.vision", "https://api.binance.com")
+BINANCE_PATH = ("/api/v3/ticker/price?symbols="
+                + urllib.parse.quote(json.dumps([c + "USDT" for c in COINS],
+                                                separators=(",", ":"))))
 UPBIT_MARKETS_URL = "https://api.upbit.com/v1/market/all"
 UPBIT_TICKER_URL = "https://api.upbit.com/v1/ticker?markets={markets}"
-BINANCE_ALL_URL = "https://api.binance.com/api/v3/ticker/price"
-BINANCE_INFO_URL = ("https://api.binance.com/api/v3/exchangeInfo"
-                    "?symbolStatus=TRADING&showPermissionSets=false")
+BINANCE_ALL_PATH = "/api/v3/ticker/price"
+BINANCE_INFO_PATH = "/api/v3/exchangeInfo?symbolStatus=TRADING&showPermissionSets=false"
 COMPARE_LIMIT = 120  # 거래대금 상위 N개만 비교 테이블에 노출
 COMPARE_OUTLIER_PP = 12.0  # 중앙값에서 ±N%p 벗어나면 제외 (상폐 잔가·동명이코인 방지)
 ERAPI_URL = "https://open.er-api.com/v6/latest/USD"
@@ -63,6 +65,18 @@ def fetch(url, timeout=10):
 
 def fetch_json(url, timeout=10):
     return json.loads(fetch(url, timeout).decode("utf-8"))
+
+
+def fetch_binance_json(path):
+    """BINANCE_BASES 를 순서대로 시도해 처음 성공한 응답을 돌려준다."""
+    last_err = None
+    for base in BINANCE_BASES:
+        try:
+            return fetch_json(base + path)
+        except Exception as e:
+            last_err = e
+            print(f"[warn] binance {base} 실패: {e}")
+    raise last_err
 
 
 def load_json(path, default=None):
@@ -126,7 +140,7 @@ def collect_bithumb():
 
 
 def collect_binance():
-    rows = fetch_json(BINANCE_URL)
+    rows = fetch_binance_json(BINANCE_PATH)
     return {row["symbol"][:-4]: float(row["price"]) for row in rows}
 
 
@@ -221,8 +235,8 @@ def collect_compare(usdkrw, kimp_usdt):
     for i in range(0, len(codes), 100):
         tickers += fetch_json(UPBIT_TICKER_URL.format(markets=",".join(codes[i:i + 100])))
     # 바이낸스: 거래중(TRADING) 심볼만 인정 — 상장폐지 코인의 잔존 가격 배제
-    active = {s["symbol"] for s in fetch_json(BINANCE_INFO_URL)["symbols"]}
-    busd = {r["symbol"]: float(r["price"]) for r in fetch_json(BINANCE_ALL_URL)
+    active = {s["symbol"] for s in fetch_binance_json(BINANCE_INFO_PATH)["symbols"]}
+    busd = {r["symbol"]: float(r["price"]) for r in fetch_binance_json(BINANCE_ALL_PATH)
             if r["symbol"] in active}
     coins = []
     for row in tickers:
