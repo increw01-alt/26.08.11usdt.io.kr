@@ -31,6 +31,7 @@ BITHUMB_URL = "https://api.bithumb.com/public/ticker/USDT_KRW"
 # 바이낸스: api.binance.com 은 GitHub Actions 러너(미국 IP)에서 HTTP 451(지역 제한)로
 # 거부된다. 공개 시세 전용 엔드포인트를 먼저 쓰고, 실패하면 기본 엔드포인트로 넘어간다.
 BINANCE_BASES = ("https://data-api.binance.vision", "https://api.binance.com")
+BINANCE_MAX_AGE_MIN = 60  # 수집 실패 시 직전 값을 재사용할 수 있는 최대 경과 시간(분)
 BINANCE_PATH = ("/api/v3/ticker/price?symbols="
                 + urllib.parse.quote(json.dumps([c + "USDT" for c in COINS],
                                                 separators=(",", ":"))))
@@ -341,7 +342,18 @@ def main():
 
     upbit = try_source("upbit", collect_upbit, prev.get("upbit"))
     bithumb = try_source("bithumb", collect_bithumb, prev.get("bithumb"))
-    binance = try_source("binance", collect_binance, prev.get("binance"))
+    binance = try_source("binance", collect_binance, None)
+    binance_iso = now_utc.strftime("%Y-%m-%dT%H:%M:%SZ")
+    if not binance:
+        # 직전 값은 최근 것일 때만 재사용한다. 오래된 해외 가격으로 김프를 계산하면
+        # 틀린 수치가 정상처럼 표시된다 (2026-08~09: 7주간 BTC 김프 오표시).
+        binance_iso = prev.get("binance_iso")
+        if is_fresh(binance_iso, BINANCE_MAX_AGE_MIN):
+            binance = prev.get("binance")
+        else:
+            binance_iso = None
+            print(f"[warn] binance 직전 값이 {BINANCE_MAX_AGE_MIN}분보다 오래됨 — "
+                  "BTC·알트 김프를 계산하지 않음")
     fx = try_source("fx", lambda: collect_fx(now_kst), prev.get("fx"))
     mcap = try_source("mcap", lambda: collect_mcap(prev), prev.get("usdt_mcap"))
 
@@ -373,6 +385,7 @@ def main():
         "upbit": upbit,
         "bithumb": bithumb,
         "binance": binance,
+        "binance_iso": binance_iso,
         "usdt_mcap": mcap,
         "derived": derived,
     }
